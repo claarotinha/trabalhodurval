@@ -473,7 +473,8 @@ MonoBehaviour:
   target: {fileID: 1070817264}
   smoothSpeed: 5
   offset: {x: 0, y: 1, z: -10}
-  minCameraX: 0
+  leftLimit: 0
+  limitPadding: 1
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +978,8 @@ MonoBehaviour:
   groundTag: Ground
   groundCheckRadius: 0.12
   groundCheckYOffset: 0.05
-  minPlayerX: 0
+  cameraLeftLimit: -999
+  leftMargin: 6
 --- !u!114 &1070817266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1325,7 +1327,7 @@ Transform:
   m_GameObject: {fileID: 2143625866}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.52, y: -3.42, z: 0}
+  m_LocalPosition: {x: 3.07, y: -3.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

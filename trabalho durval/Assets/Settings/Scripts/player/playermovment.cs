@@ -11,12 +11,13 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     public float jumpForce = 7f;
 
     [Header("Ground Check fallback")]
-    public string groundTag = "Ground";     
+    public string groundTag = "Ground";
     public float groundCheckRadius = 0.12f;
     public float groundCheckYOffset = 0.05f;
 
-    [Header("Limite Esquerdo")]
-    public float minPlayerX = 0f;   // <--- ADICIONADO
+    [Header("Trava de limite (recebida da câmera)")]
+    public float cameraLeftLimit = -999f;  // atualizado pela câmera
+    public float leftMargin = 2f;          // quanto o player pode recuar
 
     private Rigidbody2D rb;
     private BoxCollider2D col;
@@ -24,8 +25,8 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     private float horizontalInput;
     private float currentSpeed;
     private bool isCrouching;
-
     private bool jumpRequested = false;
+
     private int groundedContacts = 0;
     private bool isGroundedFallback = false;
 
@@ -33,7 +34,6 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
-
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
@@ -58,6 +58,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Ground Check
         Vector2 footPos = new Vector2(transform.position.x, col.bounds.min.y - groundCheckYOffset);
         Collider2D[] hits = Physics2D.OverlapCircleAll(footPos, groundCheckRadius);
 
@@ -72,16 +73,18 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
             }
         }
 
-        // MOVIMENTO + TRAVA NA ESQUERDA ------------------------------------
+        // MOVIMENTO
         rb.linearVelocity = new Vector2(horizontalInput * currentSpeed, rb.linearVelocity.y);
 
-        // impede o player de passar do limite mínimo
-        if (transform.position.x < minPlayerX)
-        {
-            transform.position = new Vector3(minPlayerX, transform.position.y, transform.position.z);
-        }
-        //-------------------------------------------------------------------
+        // --- NOVA TRAVA ESQUERDA DINÂMICA (com margem que você pode voltar) --- //
+        float minAllowedX = cameraLeftLimit - leftMargin;
 
+        if (transform.position.x < minAllowedX)
+        {
+            transform.position = new Vector3(minAllowedX, transform.position.y, transform.position.z);
+        }
+
+        // PULO
         if (jumpRequested && (IsGrounded() || isGroundedFallback))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
@@ -141,4 +144,3 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         Debug.Log("Interagiu!");
     }
 }
-
