@@ -16,8 +16,8 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     public float groundCheckYOffset = 0.05f;
 
     [Header("Trava de limite (recebida da câmera)")]
-    public float cameraLeftLimit = -999f;  // atualizado pela câmera
-    public float leftMargin = 2f;          // quanto o player pode recuar
+    public float cameraLeftLimit = -999f;
+    public float leftMargin = 2f;
 
     private Rigidbody2D rb;
     private BoxCollider2D col;
@@ -30,11 +30,28 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     private int groundedContacts = 0;
     private bool isGroundedFallback = false;
 
+    // ---------------------------
+    // SISTEMA DE SLOW
+    // ---------------------------
+    private float slowMultiplier = 1f;
+    private float slowTimer = 0f;
+    private bool isSlowed = false;
+
+    private float baseWalk;
+    private float baseRun;
+    private float baseCrouch;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
+
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        // Guardar valores originais
+        baseWalk = walkSpeed;
+        baseRun = runSpeed;
+        baseCrouch = crouchSpeed;
     }
 
     void Update()
@@ -50,10 +67,14 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
             isCrouching = true;
             currentSpeed = crouchSpeed;
         }
-        else isCrouching = false;
+        else
+            isCrouching = false;
 
         if (Input.GetKeyDown(KeyCode.E)) Interagir();
         if (Input.GetKeyDown(KeyCode.Space)) jumpRequested = true;
+
+        // Atualiza slow
+        UpdateSlow();
     }
 
     void FixedUpdate()
@@ -76,7 +97,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         // MOVIMENTO
         rb.linearVelocity = new Vector2(horizontalInput * currentSpeed, rb.linearVelocity.y);
 
-        // --- NOVA TRAVA ESQUERDA DINÂMICA (com margem que você pode voltar) --- //
+        // Trava esquerda
         float minAllowedX = cameraLeftLimit - leftMargin;
 
         if (transform.position.x < minAllowedX)
@@ -142,5 +163,54 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     void Interagir()
     {
         Debug.Log("Interagiu!");
+    }
+
+    // ============================================================
+    // SISTEMA DE SLOW (CHAMADO PELA OBSERVADORA)
+    // ============================================================
+    public void ApplySlow(float amount, float duration)
+    {
+        // amount = porcentagem (0.5 = -50% de velocidade)
+        slowMultiplier = amount;
+        slowTimer = duration;
+
+        if (!isSlowed)
+            StartSlow();
+        else
+            RefreshSlow();
+    }
+
+    void StartSlow()
+    {
+        isSlowed = true;
+
+        walkSpeed = baseWalk * slowMultiplier;
+        runSpeed = baseRun * slowMultiplier;
+        crouchSpeed = baseCrouch * slowMultiplier;
+    }
+
+    void RefreshSlow()
+    {
+        // Reinicia o tempo mas mantém slow atual
+        slowTimer = Mathf.Max(slowTimer, 0.1f);
+    }
+
+    void UpdateSlow()
+    {
+        if (!isSlowed) return;
+
+        slowTimer -= Time.deltaTime;
+
+        if (slowTimer <= 0)
+            ResetSpeed();
+    }
+
+    void ResetSpeed()
+    {
+        isSlowed = false;
+
+        walkSpeed = baseWalk;
+        runSpeed = baseRun;
+        crouchSpeed = baseCrouch;
     }
 }

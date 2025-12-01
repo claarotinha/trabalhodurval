@@ -60,8 +60,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_CollisionDetection: 1
+  m_Constraints: 6
 --- !u!61 &-8158871703479329835
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 1.62, y: 2.72}
     newSize: {x: 1.62, y: 2.72}
     adaptiveTilingThreshold: 0.5
@@ -120,15 +120,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6cab0dcf96f9de4d9989156ead25624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
+  player: {fileID: 0}
   moveSpeed: 3
-  moveRight: 1
-  enemyGroundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  maxDistanceToPlayer: 12
-  dissolveSpeed: 2
-  player: {fileID: 6914814116322651443, guid: 5c276788a6ec3544aa65e9f96f7a8f6c, type: 3}
-  normalSprite: {fileID: -7034562338746749564, guid: 7ef277540e43d654fa2fcabc21515107, type: 3}
+  minDistanceToPlayer: 0
+  hitsToPlayer: 1
+  despawnDistance: 4
+  moveSpeed: 3
+  minDistanceToPlayer: 0
+  despawnDistance: 4
 --- !u!212 &4058581757710539543
 SpriteRenderer:
   m_ObjectHideFlags: 0

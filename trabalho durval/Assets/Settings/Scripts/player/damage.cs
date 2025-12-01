@@ -8,13 +8,22 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth;
 
     [Header("UI")]
-    public Slider lifeBar;   // Slider de vida
+    public Slider lifeBar;
+
+    [Header("Knockback")]
+    public float knockbackForce = 10f;
+    public float knockbackUpForce = 4f;
+    public float stunDuration = 0.2f;
+
+    private Rigidbody2D rb;
+    private bool isStunned = false;
 
     void Start()
     {
         currentHealth = maxHealth;
 
-        // Configura o slider no início
+        rb = GetComponent<Rigidbody2D>();
+
         if (lifeBar != null)
         {
             lifeBar.minValue = 0;
@@ -23,12 +32,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, Transform enemyPos = null)
     {
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         UpdateLifeUI();
+
+        // Aplica knockback se o inimigo foi passado
+        if (enemyPos != null)
+            ApplyKnockback(enemyPos);
 
         if (currentHealth <= 0)
         {
@@ -36,27 +49,39 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
+    void ApplyKnockback(Transform enemy)
     {
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        if (isStunned) return;
 
-        UpdateLifeUI();
+        isStunned = true;
+
+        // Direção contrária ao inimigo
+        float direction = Mathf.Sign(transform.position.x - enemy.position.x);
+
+        // Zera velocidade antes
+        rb.linearVelocity = Vector2.zero;
+
+        // Força para trás + para cima
+        Vector2 force = new Vector2(direction * knockbackForce, knockbackUpForce);
+        rb.AddForce(force, ForceMode2D.Impulse);
+
+        // Remove stun depois
+        Invoke(nameof(ResetStun), stunDuration);
+    }
+
+    void ResetStun()
+    {
+        isStunned = false;
     }
 
     void UpdateLifeUI()
     {
         if (lifeBar != null)
-        {
             lifeBar.value = currentHealth;
-        }
     }
 
     void Die()
     {
         Debug.Log("O Player morreu!");
-        // Reiniciar cena
-        // Ou chamar GameManager
-        // Ou mostrar Game Over
     }
 }

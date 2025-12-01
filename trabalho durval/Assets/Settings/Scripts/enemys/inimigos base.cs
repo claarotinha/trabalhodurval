@@ -1,105 +1,78 @@
 using UnityEngine;
 
-public class ShadowEnemyBase : MonoBehaviour
+public class EnemyBase : MonoBehaviour
 {
+    // -----------------------------
+    // Tipos de inimigos
+    // -----------------------------
+    public enum EnemyType { Normal, Rapida, Observadora }
+    public EnemyType enemyType;
+
+    [HideInInspector] public Transform player;
+
+    // -----------------------------
+    // Movimento
+    // -----------------------------
     [Header("Movimento")]
-    public float speed = 2f;
+    [SerializeField] protected float moveSpeed = 2f;            // Velocidade base
+    [SerializeField] protected float minDistanceToPlayer = 1.5f; // Distância mínima para não grudar no player
 
-    [Header("Distância e dissolução")]
-    public float maxDistanceToPlayer = 15f;
-    public float dissolveSpeed = 0.05f;           
-    public float dissolveDelayAfterDistance = 2f; 
+    // -----------------------------
+    // Ataque
+    // -----------------------------
+    [Header("Ataque")]
+    public int hitsToPlayer = 2;           // Quantos hits o inimigo dá antes de morrer
+    public float despawnDistance = 10f;    // Distância máxima do player para sumir
 
-    [Header("Spawn buffer")]
-    public float spawnBufferTime = 1f; 
-
-    [Header("Ground Check")]
-    public LayerMask walkableLayer;
-    public float groundCheckDistance = 1f;
-
-    protected Transform player;
-    protected SpriteRenderer sr;
-    protected bool isDissolving = false;
-    protected float distanceTimer = 0f;
-    protected float spawnBufferCounter;
-
-    protected virtual void Start()
+    // -----------------------------
+    // Métodos básicos
+    // -----------------------------
+    protected virtual void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
-        player = GameObject.FindWithTag("Player")?.transform;
-        spawnBufferCounter = spawnBufferTime;
-
-        if (sr == null)
-            Debug.LogError("SpriteRenderer não encontrado!");
-        if (player == null)
-            Debug.LogError("Player não encontrado na cena!");
+        // Encontrar o player na cena (opcional)
+        if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
+            player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    protected virtual void Update()
+    // Movimento suave em direção ao player
+    protected void MoveTowardsPlayer(Rigidbody2D rb)
     {
         if (player == null) return;
 
-        Move();
-        CheckGround();
+        float dir = (transform.position.x > player.position.x) ? -1f : 1f;
+        float distance = Vector2.Distance(transform.position, player.position);
 
-        // durante buffer inicial, não dissolve
-        if (spawnBufferCounter > 0f)
+        if (distance > minDistanceToPlayer)
         {
-            spawnBufferCounter -= Time.deltaTime;
-            return;
-        }
-
-        CheckDistance();
-        Dissolve();
-    }
-
-    protected virtual void Move()
-    {
-        if (player == null) return;
-
-        // Normais e rápidas perseguem o player
-        Vector3 dir = (player.position - transform.position).normalized;
-        transform.position += new Vector3(dir.x, 0, 0) * speed * Time.deltaTime;
-    }
-
-    protected virtual void CheckGround()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, walkableLayer);
-        if (hit.collider == null)
-            Die(); 
-    }
-
-    protected virtual void CheckDistance()
-    {
-        float dist = Vector2.Distance(transform.position, player.position);
-
-        if (dist > maxDistanceToPlayer)
-        {
-            distanceTimer += Time.deltaTime;
-            if (distanceTimer >= dissolveDelayAfterDistance)
-                isDissolving = true;
-        }
-        else
-        {
-            distanceTimer = 0f;
-            isDissolving = false;
+            Vector2 targetPos = rb.position + Vector2.right * dir * moveSpeed * Time.fixedDeltaTime;
+            rb.MovePosition(targetPos);
         }
     }
 
-    protected virtual void Dissolve()
+    // Checa se inimigo deve despawnar
+    protected bool ShouldDespawn()
     {
-        if (!isDissolving || sr == null) return;
-
-        Color c = sr.color;
-        c.a -= Time.deltaTime * dissolveSpeed;
-        sr.color = c;
-
-        if (c.a <= 0f)
-            Die();
+        if (player == null) return false;
+        return Vector2.Distance(transform.position, player.position) > despawnDistance;
     }
 
-    protected virtual void Die()
+    // Lógica de dano ao player
+    protected virtual void AttackPlayer(Collider2D collision)
     {
-        Destroy(gameObject);
+        if (!collision.CompareTag("Player")) return;
+
+        var playerHealth = collision.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+            playerHealth.TakeDamage(1);
+
+        hitsToPlayer--;
+        if (hitsToPlayer <= 0)
+            Destroy(gameObject);
+    }
+
+    // Trigger padrão
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        AttackPlayer(collision);
     }
 }

@@ -43,7 +43,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4314818896195801076}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -60,8 +60,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_CollisionDetection: 1
+  m_Constraints: 6
 --- !u!61 &1780790566655539514
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -92,14 +92,14 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 1.52, y: 3.62}
     newSize: {x: 1.52, y: 3.62}
     adaptiveTilingThreshold: 0.5
@@ -120,17 +120,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546f3b7ab40a59443ae446995eb9316a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  moveRight: 1
-  enemyGroundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  maxDistanceToPlayer: 12
-  dissolveSpeed: 2
-  player: {fileID: 6914814116322651443, guid: 5c276788a6ec3544aa65e9f96f7a8f6c, type: 3}
-  observadoraSprite: {fileID: 568636516220493244, guid: 57a8feadab5f0234b820e1f00a92dda4, type: 3}
-  slowDuration: 2
-  slowFactor: 0.5
+  enemyType: 2
+  player: {fileID: 0}
+  moveSpeed: 2
+  minDistanceToPlayer: 1.5
+  hitsToPlayer: 2
+  despawnDistance: 6
+  lifeTimeIfNotTouched: 2
 --- !u!212 &7466765814860787797
 SpriteRenderer:
   m_ObjectHideFlags: 0
