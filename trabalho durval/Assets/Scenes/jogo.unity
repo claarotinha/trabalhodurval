@@ -672,7 +672,7 @@ GameObject:
   - component: {fileID: 1017329266}
   - component: {fileID: 1017329265}
   - component: {fileID: 1017329264}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: "Ch\xE3o"
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -829,15 +829,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760900317f0e7484f82bae6768d6f82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1070817264}
-  normalPrefab: {fileID: 9018190763055919958, guid: 624bcca60afd9fb498c47e7aae733d25, type: 3}
-  rapidoPrefab: {fileID: 3051192617843795739, guid: c9cbece7713f08e4ab87fee3171704ea, type: 3}
-  observadoraPrefab: {fileID: 4314818896195801076, guid: 6c9eaadaf05465f4abb5dbc19349368d, type: 3}
+  enemies:
+  - prefab: {fileID: 9018190763055919958, guid: 624bcca60afd9fb498c47e7aae733d25, type: 3}
+    probability: 70.4
+  - prefab: {fileID: 3051192617843795739, guid: c9cbece7713f08e4ab87fee3171704ea, type: 3}
+    probability: 35.1
+  - prefab: {fileID: 4314818896195801076, guid: 6c9eaadaf05465f4abb5dbc19349368d, type: 3}
+    probability: 29.1
+  minDistance: 3
+  maxDistance: 5
   spawnInterval: 2
-  distanceBehind: -8
-  distanceAhead: 8
-  verticalOffset: 1
-  maxShadows: 5
+  maxEnemies: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  spawnHeight: 0
 --- !u!4 &1205114888
 Transform:
   m_ObjectHideFlags: 0
@@ -1334,8 +1340,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5577640614430214844, guid: 5c276788a6ec3544aa65e9f96f7a8f6c, type: 3}
+      propertyPath: runSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5577640614430214844, guid: 5c276788a6ec3544aa65e9f96f7a8f6c, type: 3}
       propertyPath: jumpForce
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5577640614430214844, guid: 5c276788a6ec3544aa65e9f96f7a8f6c, type: 3}
+      propertyPath: walkSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6103791757676526708, guid: 5c276788a6ec3544aa65e9f96f7a8f6c, type: 3}
       propertyPath: m_Name
