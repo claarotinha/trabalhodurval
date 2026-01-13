@@ -7,38 +7,54 @@ public class CameraFollow : MonoBehaviour
     public Vector3 offset;
 
     [Header("Limite Esquerdo Progressivo")]
-    public float leftLimit = 0f;   // cresce conforme o player avança
-    public float limitPadding = 1f; // quão colado o player precisa estar para avançar o limite
+    public float leftLimit = 0f;
+    public float limitPadding = 1f;
+
+    private bool freezeCamera = false;
 
     void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null || freezeCamera) return;
 
-        // Atualiza limite conforme player avança
+        // Atualiza limite APENAS se o player avançar
         if (target.position.x > leftLimit + limitPadding)
         {
             leftLimit = target.position.x - limitPadding;
         }
 
-        // Calcula posição desejada
         Vector3 desiredPosition = target.position + offset;
-
-        // Trava esquerda da câmera
         desiredPosition.x = Mathf.Max(desiredPosition.x, leftLimit);
 
-        // Suavização
-        Vector3 smoothedPosition = Vector3.Lerp(
+        transform.position = Vector3.Lerp(
             transform.position,
             desiredPosition,
             smoothSpeed * Time.deltaTime
         );
 
-        transform.position = smoothedPosition;
-
-        // --- ENVIA O LIMITE PARA O PLAYER --- //
-        if (target.TryGetComponent<PlayerMovement2D_TagBased>(out var p))
+        // Envia limite ao player
+        if (target.TryGetComponent(out PlayerMovement2D_TagBased p))
         {
             p.cameraLeftLimit = leftLimit;
         }
+    }
+
+    // ===============================
+    // 🔑 USADO NO RESPAWN
+    // ===============================
+    public void ForceCameraTo(Vector3 position)
+    {
+        freezeCamera = true;
+
+        // Recalcula limite
+        leftLimit = position.x - limitPadding;
+
+        // Move câmera instantaneamente
+        transform.position = new Vector3(
+            position.x + offset.x,
+            position.y + offset.y,
+            transform.position.z
+        );
+
+        freezeCamera = false;
     }
 }

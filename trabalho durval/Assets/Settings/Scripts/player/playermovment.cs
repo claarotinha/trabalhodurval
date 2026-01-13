@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerMovement2D_TagBased : MonoBehaviour
 {
@@ -10,12 +11,12 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     [Header("Pulo")]
     public float jumpForce = 7f;
 
-    [Header("Ground Check fallback")]
+    [Header("Ground Check")]
     public string groundTag = "Ground";
     public float groundCheckRadius = 0.12f;
     public float groundCheckYOffset = 0.05f;
 
-    [Header("Trava de limite (recebida da câmera)")]
+    [Header("Trava de limite (câmera)")]
     public float cameraLeftLimit = -999f;
     public float leftMargin = 2f;
 
@@ -24,34 +25,19 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
     private float horizontalInput;
     private float currentSpeed;
-    private bool isCrouching;
-    private bool jumpRequested = false;
+    private bool jumpRequested;
 
     private int groundedContacts = 0;
     private bool isGroundedFallback = false;
 
-    // ---------------------------
-    // SISTEMA DE SLOW
-    // ---------------------------
-    private float slowMultiplier = 1f;
-    private float slowTimer = 0f;
-    private bool isSlowed = false;
-
-    private float baseWalk;
-    private float baseRun;
-    private float baseCrouch;
+    // 🔑 CONTROLE DE RESPAWN
+    private bool ignoreCameraLimit = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
-
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-        // Guardar valores originais
-        baseWalk = walkSpeed;
-        baseRun = runSpeed;
-        baseCrouch = crouchSpeed;
     }
 
     void Update()
@@ -62,19 +48,8 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
         currentSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
 
-        if (Input.GetKey(KeyCode.F))
-        {
-            isCrouching = true;
-            currentSpeed = crouchSpeed;
-        }
-        else
-            isCrouching = false;
-
-        if (Input.GetKeyDown(KeyCode.E)) Interagir();
-        if (Input.GetKeyDown(KeyCode.Space)) jumpRequested = true;
-
-        // Atualiza slow
-        UpdateSlow();
+        if (Input.GetKeyDown(KeyCode.Space))
+            jumpRequested = true;
     }
 
     void FixedUpdate()
@@ -86,39 +61,47 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         isGroundedFallback = false;
         foreach (var c in hits)
         {
-            if (c == null || c.isTrigger) continue;
-            if (c.gameObject.CompareTag(groundTag))
+            if (c != null && !c.isTrigger && c.CompareTag(groundTag))
             {
                 isGroundedFallback = true;
                 break;
             }
         }
 
-        // MOVIMENTO
         rb.linearVelocity = new Vector2(horizontalInput * currentSpeed, rb.linearVelocity.y);
 
-        // Trava esquerda
-        float minAllowedX = cameraLeftLimit - leftMargin;
-
-        if (transform.position.x < minAllowedX)
+        // 🔴 TRAVA DA CÂMERA (SÓ SE NÃO ESTIVER EM RESPAWN)
+        if (!ignoreCameraLimit)
         {
-            transform.position = new Vector3(minAllowedX, transform.position.y, transform.position.z);
+            float minAllowedX = cameraLeftLimit - leftMargin;
+            if (transform.position.x < minAllowedX)
+            {
+                transform.position = new Vector3(minAllowedX, transform.position.y, transform.position.z);
+            }
         }
 
         // PULO
-        if (jumpRequested && (IsGrounded() || isGroundedFallback))
+        if (jumpRequested && (groundedContacts > 0 || isGroundedFallback))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpRequested = false;
-
             groundedContacts = 0;
-            isGroundedFallback = false;
         }
     }
 
-    bool IsGrounded()
+    // ================================
+    // 🔑 CHAMADO PELO PLAYER HEALTH
+    // ================================
+    public void IgnoreCameraLimit(float time)
     {
-        return groundedContacts > 0;
+        StartCoroutine(IgnoreCameraRoutine(time));
+    }
+
+    IEnumerator IgnoreCameraRoutine(float time)
+    {
+        ignoreCameraLimit = true;
+        yield return new WaitForSeconds(time);
+        ignoreCameraLimit = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -135,82 +118,9 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         }
     }
 
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if (!collision.gameObject.CompareTag(groundTag)) return;
-
-        bool found = false;
-        foreach (var cp in collision.contacts)
-        {
-            if (cp.normal.y > 0.6f)
-            {
-                found = true;
-                break;
-            }
-        }
-
-        if (found && groundedContacts == 0)
-            groundedContacts = 1;
-    }
-
     void OnCollisionExit2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag(groundTag)) return;
-        groundedContacts--;
-        if (groundedContacts < 0) groundedContacts = 0;
-    }
-
-    void Interagir()
-    {
-        Debug.Log("Interagiu!");
-    }
-
-    // ============================================================
-    // SISTEMA DE SLOW (CHAMADO PELA OBSERVADORA)
-    // ============================================================
-    public void ApplySlow(float amount, float duration)
-    {
-        // amount = porcentagem (0.5 = -50% de velocidade)
-        slowMultiplier = amount;
-        slowTimer = duration;
-
-        if (!isSlowed)
-            StartSlow();
-        else
-            RefreshSlow();
-    }
-
-    void StartSlow()
-    {
-        isSlowed = true;
-
-        walkSpeed = baseWalk * slowMultiplier;
-        runSpeed = baseRun * slowMultiplier;
-        crouchSpeed = baseCrouch * slowMultiplier;
-    }
-
-    void RefreshSlow()
-    {
-        // Reinicia o tempo mas mantém slow atual
-        slowTimer = Mathf.Max(slowTimer, 0.1f);
-    }
-
-    void UpdateSlow()
-    {
-        if (!isSlowed) return;
-
-        slowTimer -= Time.deltaTime;
-
-        if (slowTimer <= 0)
-            ResetSpeed();
-    }
-
-    void ResetSpeed()
-    {
-        isSlowed = false;
-
-        walkSpeed = baseWalk;
-        runSpeed = baseRun;
-        crouchSpeed = baseCrouch;
+        groundedContacts = Mathf.Max(0, groundedContacts - 1);
     }
 }
