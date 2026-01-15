@@ -10,51 +10,44 @@ public class CameraFollow : MonoBehaviour
     public float leftLimit = 0f;
     public float limitPadding = 1f;
 
-    private bool freezeCamera = false;
+    private bool skipFrame;
 
     void LateUpdate()
     {
-        if (target == null || freezeCamera) return;
+        if (target == null) return;
 
-        // Atualiza limite APENAS se o player avançar
-        if (target.position.x > leftLimit + limitPadding)
+        if (skipFrame)
         {
-            leftLimit = target.position.x - limitPadding;
+            skipFrame = false;
+            return;
         }
 
-        Vector3 desiredPosition = target.position + offset;
-        desiredPosition.x = Mathf.Max(desiredPosition.x, leftLimit);
+        if (target.position.x > leftLimit + limitPadding)
+            leftLimit = target.position.x - limitPadding;
+
+        Vector3 desired = target.position + offset;
+        desired.x = Mathf.Max(desired.x, leftLimit);
 
         transform.position = Vector3.Lerp(
             transform.position,
-            desiredPosition,
+            desired,
             smoothSpeed * Time.deltaTime
         );
 
-        // Envia limite ao player
         if (target.TryGetComponent(out PlayerMovement2D_TagBased p))
-        {
             p.cameraLeftLimit = leftLimit;
-        }
     }
 
-    // ===============================
-    // 🔑 USADO NO RESPAWN
-    // ===============================
-    public void ForceCameraTo(Vector3 position)
+    public void ResetCameraTo(Vector3 point)
     {
-        freezeCamera = true;
+        leftLimit = point.x - limitPadding;
 
-        // Recalcula limite
-        leftLimit = position.x - limitPadding;
-
-        // Move câmera instantaneamente
         transform.position = new Vector3(
-            position.x + offset.x,
-            position.y + offset.y,
+            point.x + offset.x,
+            point.y + offset.y,
             transform.position.z
         );
 
-        freezeCamera = false;
+        skipFrame = true;
     }
 }

@@ -30,7 +30,6 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     private int groundedContacts = 0;
     private bool isGroundedFallback = false;
 
-    // 🔑 CONTROLE DE RESPAWN
     private bool ignoreCameraLimit = false;
 
     void Start()
@@ -54,7 +53,6 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Ground Check
         Vector2 footPos = new Vector2(transform.position.x, col.bounds.min.y - groundCheckYOffset);
         Collider2D[] hits = Physics2D.OverlapCircleAll(footPos, groundCheckRadius);
 
@@ -70,7 +68,6 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
         rb.linearVelocity = new Vector2(horizontalInput * currentSpeed, rb.linearVelocity.y);
 
-        // 🔴 TRAVA DA CÂMERA (SÓ SE NÃO ESTIVER EM RESPAWN)
         if (!ignoreCameraLimit)
         {
             float minAllowedX = cameraLeftLimit - leftMargin;
@@ -80,7 +77,6 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
             }
         }
 
-        // PULO
         if (jumpRequested && (groundedContacts > 0 || isGroundedFallback))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
@@ -89,9 +85,6 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         }
     }
 
-    // ================================
-    // 🔑 CHAMADO PELO PLAYER HEALTH
-    // ================================
     public void IgnoreCameraLimit(float time)
     {
         StartCoroutine(IgnoreCameraRoutine(time));

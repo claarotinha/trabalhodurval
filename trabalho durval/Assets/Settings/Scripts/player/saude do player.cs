@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -11,24 +10,25 @@ public class PlayerHealth : MonoBehaviour
     [Header("UI")]
     public Slider lifeBar;
 
-    [Header("Respawn")]
-    public float respawnDelay = 1f;
+    [Header("Knockback")]
+    public float knockbackForce = 10f;
+    public float knockbackUpForce = 4f;
+    public float stunDuration = 0.2f;
 
     private Rigidbody2D rb;
-    private PlayerMovement2D_TagBased movement;
-    private CameraFollow cam;
+    private bool isStunned;
 
-    private bool isDead = false;
-    private Vector3 checkpointPosition;
+    private Vector3 respawnPoint;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        movement = GetComponent<PlayerMovement2D_TagBased>();
-        cam = FindObjectOfType<CameraFollow>();
 
         currentHealth = maxHealth;
-        checkpointPosition = transform.position;
+
+        // fallback: posição inicial
+        if (respawnPoint == Vector3.zero)
+            respawnPoint = transform.position;
 
         if (lifeBar != null)
         {
@@ -37,57 +37,64 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    // 🔑 CHAMADO PELO CHECKPOINT
+    public void SetCheckpoint(Vector3 point)
     {
-        if (isDead) return;
+        respawnPoint = point;
+        Debug.Log("Novo checkpoint salvo: " + respawnPoint);
+    }
+
+    public void TakeDamage(int amount, Transform enemy = null)
+    {
+        if (isStunned) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateUI();
 
+        if (enemy != null)
+            ApplyKnockback(enemy);
+
         if (currentHealth <= 0)
             Die();
     }
 
-    void Die()
+    void ApplyKnockback(Transform enemy)
     {
-        if (isDead) return;
+        isStunned = true;
 
-        isDead = true;
-        movement.enabled = false;
+        float dir = Mathf.Sign(transform.position.x - enemy.position.x);
         rb.linearVelocity = Vector2.zero;
+        rb.AddForce(new Vector2(dir * knockbackForce, knockbackUpForce), ForceMode2D.Impulse);
 
-        StartCoroutine(Respawn());
+        Invoke(nameof(ResetStun), stunDuration);
     }
 
-    IEnumerator Respawn()
+    void ResetStun()
     {
-        yield return new WaitForSeconds(respawnDelay);
+        isStunned = false;
+    }
 
-        // Move player
-        transform.position = checkpointPosition;
+    void Die()
+    {
         rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
 
-        // 🔑 MOVE A CÂMERA JUNTO
+        // move player
+        transform.position = respawnPoint;
+
+        // ignora limite da câmera
+        PlayerMovement2D_TagBased move = GetComponent<PlayerMovement2D_TagBased>();
+        if (move != null)
+            move.IgnoreCameraLimit(0.15f);
+
+        // reseta câmera
+        CameraFollow cam = Camera.main.GetComponent<CameraFollow>();
         if (cam != null)
-            cam.ForceCameraTo(checkpointPosition);
+            cam.ResetCameraTo(respawnPoint);
 
         currentHealth = maxHealth;
         UpdateUI();
-
-        movement.enabled = true;
-        isDead = false;
-    }
-
-    public void SetCheckpoint(Vector3 pos)
-    {
-        checkpointPosition = pos;
-
-        // Atualiza câmera imediatamente
-        if (cam != null)
-            cam.ForceCameraTo(pos);
-
-        Debug.Log("Checkpoint definido: " + pos);
     }
 
     void UpdateUI()

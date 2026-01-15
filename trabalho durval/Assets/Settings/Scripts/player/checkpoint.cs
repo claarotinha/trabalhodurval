@@ -2,16 +2,21 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    private bool used = false;
+    private bool activated = false;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (used) return;
+        if (activated) return;
 
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerHealth>().SetCheckpoint(transform.position);
-            used = true;
+            PlayerHealth health = other.GetComponent<PlayerHealth>();
+            if (health != null)
+            {
+                health.SetCheckpoint(transform.position);
+                activated = true;
+                Debug.Log("Checkpoint ativado: " + transform.position);
+            }
         }
     }
 }
