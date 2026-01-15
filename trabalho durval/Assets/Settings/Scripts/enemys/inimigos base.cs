@@ -1,78 +1,63 @@
 using UnityEngine;
+using System.Collections;
 
-public class EnemyBase : MonoBehaviour
+public abstract class EnemyBase : MonoBehaviour
 {
-    // -----------------------------
-    // Tipos de inimigos
-    // -----------------------------
     public enum EnemyType { Normal, Rapida, Observadora }
     public EnemyType enemyType;
 
     [HideInInspector] public Transform player;
+    protected Rigidbody2D rb;
 
-    // -----------------------------
-    // Movimento
-    // -----------------------------
     [Header("Movimento")]
-    [SerializeField] protected float moveSpeed = 2f;            // Velocidade base
-    [SerializeField] protected float minDistanceToPlayer = 1.5f; // Distância mínima para não grudar no player
+    [SerializeField] protected float moveSpeed = 2f;
+    [SerializeField] protected float minDistanceToPlayer = 0.5f;
+    [SerializeField] protected float reactionDelay = 0.5f;
 
-    // -----------------------------
-    // Ataque
-    // -----------------------------
-    [Header("Ataque")]
-    public int hitsToPlayer = 2;           // Quantos hits o inimigo dá antes de morrer
-    public float despawnDistance = 10f;    // Distância máxima do player para sumir
+    [Header("Despawn")]
+    [SerializeField] protected float despawnDistance = 12f;
 
-    // -----------------------------
-    // Métodos básicos
-    // -----------------------------
+    protected bool canMove = false;
+
     protected virtual void Awake()
     {
-        // Encontrar o player na cena (opcional)
-        if (player == null && GameObject.FindGameObjectWithTag("Player") != null)
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        rb = GetComponent<Rigidbody2D>();
+        if (rb == null) rb = gameObject.AddComponent<Rigidbody2D>();
+
+        rb.isKinematic = false;
+        rb.gravityScale = 0;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.isTrigger = true;
+
+        StartCoroutine(ReactionDelay());
     }
 
-    // Movimento suave em direção ao player
-    protected void MoveTowardsPlayer(Rigidbody2D rb)
+    IEnumerator ReactionDelay()
     {
-        if (player == null) return;
-
-        float dir = (transform.position.x > player.position.x) ? -1f : 1f;
-        float distance = Vector2.Distance(transform.position, player.position);
-
-        if (distance > minDistanceToPlayer)
-        {
-            Vector2 targetPos = rb.position + Vector2.right * dir * moveSpeed * Time.fixedDeltaTime;
-            rb.MovePosition(targetPos);
-        }
+        yield return new WaitForSeconds(reactionDelay);
+        canMove = true;
     }
 
-    // Checa se inimigo deve despawnar
-    protected bool ShouldDespawn()
+    protected virtual void FixedUpdate()
     {
-        if (player == null) return false;
-        return Vector2.Distance(transform.position, player.position) > despawnDistance;
-    }
+        if (!canMove || player == null) return;
 
-    // Lógica de dano ao player
-    protected virtual void AttackPlayer(Collider2D collision)
-    {
-        if (!collision.CompareTag("Player")) return;
+        MoveTowardsPlayer(moveSpeed);
 
-        var playerHealth = collision.GetComponent<PlayerHealth>();
-        if (playerHealth != null)
-            playerHealth.TakeDamage(1);
-
-        hitsToPlayer--;
-        if (hitsToPlayer <= 0)
+        if (Vector2.Distance(transform.position, player.position) > despawnDistance)
             Destroy(gameObject);
     }
 
-    // Trigger padrão
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    protected void MoveTowardsPlayer(float speed)
     {
-        AttackPlayer(collision);
+        float distance = Vector2.Distance(rb.position, player.position);
+        if (distance <= minDistanceToPlayer) return;
+
+        float dir = Mathf.Sign(player.position.x - rb.position.x);
+        rb.MovePosition(rb.position + Vector2.right * dir * speed * Time.fixedDeltaTime);
     }
 }

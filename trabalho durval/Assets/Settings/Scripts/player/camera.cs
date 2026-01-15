@@ -28,11 +28,7 @@ public class CameraFollow : MonoBehaviour
         Vector3 desired = target.position + offset;
         desired.x = Mathf.Max(desired.x, leftLimit);
 
-        transform.position = Vector3.Lerp(
-            transform.position,
-            desired,
-            smoothSpeed * Time.deltaTime
-        );
+        transform.position = Vector3.Lerp(transform.position, desired, smoothSpeed * Time.deltaTime);
 
         if (target.TryGetComponent(out PlayerMovement2D_TagBased p))
             p.cameraLeftLimit = leftLimit;

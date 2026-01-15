@@ -2,47 +2,41 @@ using UnityEngine;
 
 public class EntidadeRapida : EnemyBase
 {
-    private Rigidbody2D rb;
+    private PlayerMovement2D_TagBased playerMove;
 
-    private void Awake()
+    protected override void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        base.Awake();
 
-        rb = GetComponent<Rigidbody2D>();
-        if (rb == null) rb = gameObject.AddComponent<Rigidbody2D>();
-
-        rb.isKinematic = true;
-        rb.gravityScale = 0;
-
-        Collider2D col = GetComponent<Collider2D>();
-        if (col != null) col.isTrigger = true;
-
-        // Configura valores específicos do tipo Rápida
         enemyType = EnemyType.Rapida;
-        moveSpeed = 4f;
-        minDistanceToPlayer = 0.5f;
-        despawnDistance = 12f;
-        hitsToPlayer = 1;
+        moveSpeed = 3f;
+        reactionDelay = 0.3f;
+        despawnDistance = 14f;
+
+        if (player != null)
+            playerMove = player.GetComponent<PlayerMovement2D_TagBased>();
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        if (player == null) return;
+        if (!canMove || player == null) return;
 
-        Vector2 direction = ((Vector2)player.position - rb.position).normalized;
-        rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+        float speed = moveSpeed;
 
-        float distance = Vector2.Distance((Vector2)player.position, rb.position);
+        if (playerMove != null && Input.GetKey(KeyCode.LeftShift))
+            speed *= 1.5f;
 
-        if (distance <= minDistanceToPlayer)
-        {
-            var playerHealth = player.GetComponent<PlayerHealth>();
-            if (playerHealth != null) playerHealth.TakeDamage(1);
+        MoveTowardsPlayer(speed);
 
+        if (Vector2.Distance(transform.position, player.position) > despawnDistance)
             Destroy(gameObject);
-        }
+    }
 
-        if (distance > despawnDistance)
-            Destroy(gameObject);
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Player")) return;
+
+        collision.GetComponent<PlayerHealth>()?.TakeDamage(1, transform);
+        Destroy(gameObject);
     }
 }

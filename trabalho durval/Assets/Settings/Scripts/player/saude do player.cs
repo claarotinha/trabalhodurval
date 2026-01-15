@@ -11,24 +11,19 @@ public class PlayerHealth : MonoBehaviour
     public Slider lifeBar;
 
     [Header("Knockback")]
-    public float knockbackForce = 10f;
-    public float knockbackUpForce = 4f;
-    public float stunDuration = 0.2f;
+    public float knockbackForce = 8f;
+    public float knockbackUpForce = 3f;
+    public float stunDuration = 0.15f;
 
     private Rigidbody2D rb;
     private bool isStunned;
-
     private Vector3 respawnPoint;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
         currentHealth = maxHealth;
-
-        // fallback: posição inicial
-        if (respawnPoint == Vector3.zero)
-            respawnPoint = transform.position;
+        respawnPoint = transform.position;
 
         if (lifeBar != null)
         {
@@ -37,19 +32,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // 🔑 CHAMADO PELO CHECKPOINT
     public void SetCheckpoint(Vector3 point)
     {
         respawnPoint = point;
-        Debug.Log("Novo checkpoint salvo: " + respawnPoint);
     }
 
     public void TakeDamage(int amount, Transform enemy = null)
     {
         if (isStunned) return;
 
-        currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
         UpdateUI();
 
         if (enemy != null)
@@ -78,17 +70,12 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         rb.linearVelocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-
-        // move player
         transform.position = respawnPoint;
 
-        // ignora limite da câmera
         PlayerMovement2D_TagBased move = GetComponent<PlayerMovement2D_TagBased>();
         if (move != null)
             move.IgnoreCameraLimit(0.15f);
 
-        // reseta câmera
         CameraFollow cam = Camera.main.GetComponent<CameraFollow>();
         if (cam != null)
             cam.ResetCameraTo(respawnPoint);

@@ -30,7 +30,12 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     private int groundedContacts = 0;
     private bool isGroundedFallback = false;
 
+    // 🔑 CONTROLE DE RESPAWN
     private bool ignoreCameraLimit = false;
+
+    // 🔑 MODIFICADOR DE VELOCIDADE (lentidão segura)
+    private float speedMultiplier = 1f;
+    private Coroutine slowRoutine;
 
     void Start()
     {
@@ -42,6 +47,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     void Update()
     {
         horizontalInput = 0f;
+
         if (Input.GetKey(KeyCode.A)) horizontalInput = -1f;
         if (Input.GetKey(KeyCode.D)) horizontalInput = 1f;
 
@@ -53,8 +59,18 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 footPos = new Vector2(transform.position.x, col.bounds.min.y - groundCheckYOffset);
-        Collider2D[] hits = Physics2D.OverlapCircleAll(footPos, groundCheckRadius);
+        // ===============================
+        // GROUND CHECK (SEM OBJETO VAZIO)
+        // ===============================
+        Vector2 footPos = new Vector2(
+            transform.position.x,
+            col.bounds.min.y - groundCheckYOffset
+        );
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(
+            footPos,
+            groundCheckRadius
+        );
 
         isGroundedFallback = false;
         foreach (var c in hits)
@@ -66,25 +82,69 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
             }
         }
 
-        rb.linearVelocity = new Vector2(horizontalInput * currentSpeed, rb.linearVelocity.y);
+        // ===============================
+        // MOVIMENTO (COM LENTIDÃO SEGURA)
+        // ===============================
+        rb.linearVelocity = new Vector2(
+            horizontalInput * currentSpeed * speedMultiplier,
+            rb.linearVelocity.y
+        );
 
+        // ===============================
+        // TRAVA DA CÂMERA
+        // ===============================
         if (!ignoreCameraLimit)
         {
             float minAllowedX = cameraLeftLimit - leftMargin;
             if (transform.position.x < minAllowedX)
             {
-                transform.position = new Vector3(minAllowedX, transform.position.y, transform.position.z);
+                transform.position = new Vector3(
+                    minAllowedX,
+                    transform.position.y,
+                    transform.position.z
+                );
             }
         }
 
+        // ===============================
+        // PULO
+        // ===============================
         if (jumpRequested && (groundedContacts > 0 || isGroundedFallback))
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(
+                rb.linearVelocity.x,
+                jumpForce
+            );
+
             jumpRequested = false;
             groundedContacts = 0;
         }
     }
 
+    // ======================================
+    // 🔑 LENTIDÃO (USADA PELA OBSERVADORA)
+    // ======================================
+    public void ApplySlow(float multiplier, float duration)
+    {
+        if (slowRoutine != null)
+            StopCoroutine(slowRoutine);
+
+        slowRoutine = StartCoroutine(SlowRoutine(multiplier, duration));
+    }
+
+    IEnumerator SlowRoutine(float multiplier, float duration)
+    {
+        // impede travamento total
+        speedMultiplier = Mathf.Clamp(multiplier, 0.25f, 1f);
+
+        yield return new WaitForSeconds(duration);
+
+        speedMultiplier = 1f;
+    }
+
+    // ======================================
+    // 🔑 IGNORAR LIMITE DA CÂMERA (RESPAWN)
+    // ======================================
     public void IgnoreCameraLimit(float time)
     {
         StartCoroutine(IgnoreCameraRoutine(time));
