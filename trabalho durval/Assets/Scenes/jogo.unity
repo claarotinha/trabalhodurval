@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: 1017329266}
   - component: {fileID: 1017329265}
   - component: {fileID: 1017329264}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: "Ch\xE3o"
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -876,7 +876,7 @@ MonoBehaviour:
   maxEnemies: 5
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   spawnHeight: 0
 --- !u!4 &1205114888
 Transform:
@@ -1813,7 +1813,7 @@ Transform:
   m_GameObject: {fileID: 1852675923}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.23, y: -3.37, z: 0}
+  m_LocalPosition: {x: 17.43, y: -3.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1944,9 +1944,10 @@ GameObject:
   - component: {fileID: 2105074247}
   - component: {fileID: 2105074246}
   - component: {fileID: 2105074245}
-  m_Layer: 0
+  - component: {fileID: 2105074248}
+  m_Layer: 3
   m_Name: plataforma
-  m_TagString: Platform
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1982,7 +1983,7 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
@@ -2061,12 +2062,31 @@ Transform:
   m_GameObject: {fileID: 2105074244}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.06, y: -0.51, z: 0}
-  m_LocalScale: {x: 7.8913, y: 1, z: 1}
+  m_LocalPosition: {x: 13.06, y: -0.7247, z: 0}
+  m_LocalScale: {x: 7.8913, y: 0.5707, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!251 &2105074248
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105074244}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &2143625866
 GameObject:
   m_ObjectHideFlags: 0
