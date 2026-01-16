@@ -23,8 +23,13 @@ public class EntidadeRapida : EnemyBase
 
         float speed = moveSpeed;
 
+        // efeito do shift (corrida)
         if (playerMove != null && Input.GetKey(KeyCode.LeftShift))
             speed *= 1.5f;
+
+        // 🔹 aplica o slow global
+        if (EffectManager.Instance != null)
+            speed *= EffectManager.Instance.globalSlowMultiplier;
 
         MoveTowardsPlayer(speed);
 

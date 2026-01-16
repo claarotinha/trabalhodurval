@@ -10,7 +10,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected Rigidbody2D rb;
 
     [Header("Movimento")]
-    [SerializeField] protected float moveSpeed = 2f;
+    [SerializeField] protected float moveSpeed = 2f;        // velocidade base
     [SerializeField] protected float minDistanceToPlayer = 0.5f;
     [SerializeField] protected float reactionDelay = 0.5f;
 
@@ -46,18 +46,23 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (!canMove || player == null) return;
 
-        MoveTowardsPlayer(moveSpeed);
+        // 🔹 aplica slow global
+        float speedMultiplier = 1f;
+        if (EffectManager.Instance != null)
+            speedMultiplier = EffectManager.Instance.globalSlowMultiplier;
+
+        MoveTowardsPlayer(moveSpeed * speedMultiplier);
 
         if (Vector2.Distance(transform.position, player.position) > despawnDistance)
             Destroy(gameObject);
     }
 
-    protected void MoveTowardsPlayer(float speed)
+    protected void MoveTowardsPlayer(float effectiveSpeed)
     {
         float distance = Vector2.Distance(rb.position, player.position);
         if (distance <= minDistanceToPlayer) return;
 
         float dir = Mathf.Sign(player.position.x - rb.position.x);
-        rb.MovePosition(rb.position + Vector2.right * dir * speed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + Vector2.right * dir * effectiveSpeed * Time.fixedDeltaTime);
     }
 }

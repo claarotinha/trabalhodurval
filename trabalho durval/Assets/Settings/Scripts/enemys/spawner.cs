@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
@@ -31,6 +32,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
         if (player == null)
         {
             Debug.LogError("Player não encontrado! Coloque a tag 'Player'.");
@@ -44,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (player == null) return;
 
-        // 🚫 NÃO SPAWNA SE ESTIVER EM ZONA SEGURA
+        // 🚫 BLOQUEIA SPAWN NA ZONA SEGURA
         if (inZonaSegura) return;
 
         spawnedEnemies.RemoveAll(e => e == null);
@@ -91,6 +93,7 @@ public class EnemySpawner : MonoBehaviour
             : player.position.x - distance;
 
         float rayStartY = player.position.y + 20f;
+
         RaycastHit2D hit = Physics2D.Raycast(
             new Vector2(xPos, rayStartY),
             Vector2.down,
@@ -107,6 +110,23 @@ public class EnemySpawner : MonoBehaviour
             return new Vector2(xPos, hit.point.y + yOffset + spawnHeight);
 
         // fallback
-        return new Vector2(xPos, player.position.y + spawnHeight + yOffset);
+        return new Vector2(xPos, player.position.y + yOffset + spawnHeight);
+    }
+
+    void Update()
+    {
+        if (player == null) return;
+
+        Debug.DrawLine(
+            new Vector2(player.position.x - maxDistance, player.position.y - 10),
+            new Vector2(player.position.x - maxDistance, player.position.y + 10),
+            Color.yellow
+        );
+
+        Debug.DrawLine(
+            new Vector2(player.position.x + maxDistance, player.position.y - 10),
+            new Vector2(player.position.x + maxDistance, player.position.y + 10),
+            Color.yellow
+        );
     }
 }
