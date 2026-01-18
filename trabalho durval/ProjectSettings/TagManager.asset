@@ -15,10 +15,10 @@ TagManager:
   - Water
   - UI
   - EnemyGround
-  - 
-  - 
-  - 
-  - 
+  - 1fundo
+  - 2avore1
+  - 3arvore2
+  - 4grama
   - 
   - 
   - 
@@ -43,6 +43,21 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 1fundo
+    uniqueID: 1341127243
+    locked: 0
+  - name: 2arvore1
+    uniqueID: 1334113275
+    locked: 0
+  - name: 3arvore2
+    uniqueID: 974596229
+    locked: 0
+  - name: 4grama
+    uniqueID: 142282343
+    locked: 0
+  - name: player
+    uniqueID: 2306273565
     locked: 0
   m_RenderingLayers:
   - Default
