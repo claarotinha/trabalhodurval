@@ -1,14 +1,12 @@
 using UnityEngine;
 
-public class CollectableHeal : MonoBehaviour
+public class CollectableHeal : CollectableBase
 {
     public int healAmount = 1;
 
-    void OnTriggerEnter2D(Collider2D col)
+    protected override void OnCollect(GameObject player)
     {
-        if (!col.CompareTag("Player")) return;
-
-        PlayerHealth health = col.GetComponent<PlayerHealth>();
+        PlayerHealth health = player.GetComponent<PlayerHealth>();
         if (health == null) return;
 
         health.currentHealth = Mathf.Min(
@@ -16,9 +14,6 @@ public class CollectableHeal : MonoBehaviour
             health.maxHealth
         );
 
-        // força atualização
         health.SendMessage("UpdateUI", SendMessageOptions.DontRequireReceiver);
-
-        Destroy(gameObject);
     }
 }

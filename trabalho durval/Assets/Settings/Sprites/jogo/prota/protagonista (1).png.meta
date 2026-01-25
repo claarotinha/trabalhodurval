@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0915fd769cf28564a8e6800963d1f83d
+guid: 051c18bff04820647a01380128605269
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7165162994186742415
-    second: protagonista_0
+      213: 352837991581778746
+    second: protagonista (1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: protagonista_0
+      name: protagonista (1)_0
       rect:
         serializedVersion: 2
         x: 199
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17599bd283a309c90800000000000000
-      internalID: -7165162994186742415
+      spriteID: a338e7fa84885e400800000000000000
+      internalID: 352837991581778746
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      protagonista_0: -7165162994186742415
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

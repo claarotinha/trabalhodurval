@@ -1,19 +1,14 @@
 using UnityEngine;
 
-public class SlowCollectable : MonoBehaviour
+public class SlowCollectable : CollectableBase
 {
     [Range(0.1f, 1f)]
-    public float slowMultiplier = 1f;
+    public float slowMultiplier = 0.5f;
     public float duration = 5f;
 
-    void OnTriggerEnter2D(Collider2D col)
+    protected override void OnCollect(GameObject player)
     {
-        if (!col.CompareTag("Player")) return;
-
-        // Ativa slow global
         if (EffectManager.Instance != null)
             EffectManager.Instance.ActivateSlow(slowMultiplier, duration);
-
-        Destroy(gameObject);
     }
 }

@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      coelhomaligno_0: 4840002637506736406
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

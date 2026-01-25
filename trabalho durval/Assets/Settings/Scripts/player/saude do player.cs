@@ -82,6 +82,10 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth = maxHealth;
         UpdateUI();
+
+        // 🔁 RESPAWN DOS COLETÁVEIS
+        if (CheckpointManager.Instance != null)
+            CheckpointManager.Instance.RespawnCollectables();
     }
 
     void UpdateUI()
