@@ -2625,8 +2625,8 @@ Transform:
   m_GameObject: {fileID: 1465493042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.4481, y: -0.1133, z: 0}
-  m_LocalScale: {x: 72.75275, y: 13.303385, z: 1}
+  m_LocalPosition: {x: 13.4481, y: 2.2938, z: 0}
+  m_LocalScale: {x: 72.75275, y: 8.488891, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3009,7 +3009,7 @@ Transform:
   m_GameObject: {fileID: 1637978573}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.61, y: 4.27, z: 0}
+  m_LocalPosition: {x: 2.89, y: -4.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3116,7 +3116,7 @@ Transform:
   m_GameObject: {fileID: 1656684005}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.09, y: -3.3, z: 0}
+  m_LocalPosition: {x: 55.98, y: -2.63, z: 0}
   m_LocalScale: {x: 0.4436, y: 0.4436, z: 0.4436}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3414,7 +3414,7 @@ Transform:
   m_GameObject: {fileID: 1740196501}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.87, y: 1.76, z: 0}
+  m_LocalPosition: {x: 12.42, y: -4.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4203,7 +4203,7 @@ Transform:
   m_GameObject: {fileID: 2143625866}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.55, y: 2.5, z: 0}
+  m_LocalPosition: {x: 0.12, y: -4.67, z: 0}
   m_LocalScale: {x: 0.4899, y: 0.7552, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4291,7 +4291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5577640614430214844, guid: 5c276788a6ec3544aa65e9f96f7a8f6c, type: 3}
       propertyPath: jumpForce
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5577640614430214844, guid: 5c276788a6ec3544aa65e9f96f7a8f6c, type: 3}
       propertyPath: walkSpeed
