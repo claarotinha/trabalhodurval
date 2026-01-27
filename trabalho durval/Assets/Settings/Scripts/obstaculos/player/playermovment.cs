@@ -41,7 +41,9 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
+
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
     }
 
     void Update()
@@ -91,17 +93,23 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         );
 
         // ===============================
-        // TRAVA DA CÂMERA
+        // TRAVA DA CÂMERA (FORMA SEGURA)
         // ===============================
         if (!ignoreCameraLimit)
         {
             float minAllowedX = cameraLeftLimit - leftMargin;
-            if (transform.position.x < minAllowedX)
+
+            if (rb.position.x < minAllowedX)
             {
-                transform.position = new Vector3(
+                rb.position = new Vector2(
                     minAllowedX,
-                    transform.position.y,
-                    transform.position.z
+                    rb.position.y
+                );
+
+                // remove empurrão residual
+                rb.linearVelocity = new Vector2(
+                    Mathf.Max(0f, rb.linearVelocity.x),
+                    rb.linearVelocity.y
                 );
             }
         }
@@ -122,7 +130,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     }
 
     // ======================================
-    // 🔑 LENTIDÃO (USADA PELA OBSERVADORA)
+    // 🔑 LENTIDÃO (USADA POR ENTIDADES)
     // ======================================
     public void ApplySlow(float multiplier, float duration)
     {
@@ -134,11 +142,8 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
     IEnumerator SlowRoutine(float multiplier, float duration)
     {
-        // impede travamento total
         speedMultiplier = Mathf.Clamp(multiplier, 0.25f, 1f);
-
         yield return new WaitForSeconds(duration);
-
         speedMultiplier = 1f;
     }
 
