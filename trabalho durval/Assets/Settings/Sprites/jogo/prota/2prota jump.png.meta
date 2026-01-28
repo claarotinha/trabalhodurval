@@ -1,19 +1,34 @@
 fileFormatVersion: 2
-guid: 087c8dd4bdd974a4b9f4da6b42a4b4d5
+guid: d77c8db6951e1ca478dc1b0f72949db4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8071288035140614883
-    second: prota run (2)_0
+      213: -602385488628184478
+    second: 2prota jump_0
   - first:
-      213: 5164682767834126061
-    second: prota run (2)_1
+      213: -6188868164822320082
+    second: 2prota jump_1
   - first:
-      213: 6310093040660450176
-    second: prota run (2)_2
+      213: 9188512642340325976
+    second: 2prota jump_2
   - first:
-      213: -4892949536433727810
-    second: prota run (2)_3
+      213: 7334070414247115311
+    second: 2prota jump_3
+  - first:
+      213: 1997831267378246796
+    second: 2prota jump_4
+  - first:
+      213: -950065191071616495
+    second: 2prota jump_5
+  - first:
+      213: 4553802269622576802
+    second: 2prota jump_6
+  - first:
+      213: 3526422078068333394
+    second: 2prota jump_7
+  - first:
+      213: 7995646140742105617
+    second: 2prota jump_8
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,7 +124,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: prota run (2)_0
+      name: 2prota jump_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +139,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d154599ab460dff80800000000000000
-      internalID: -8071288035140614883
+      spriteID: 26a8774f695e3a7f0800000000000000
+      internalID: -602385488628184478
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota run (2)_1
+      name: 2prota jump_1
       rect:
         serializedVersion: 2
         x: 64
@@ -146,14 +161,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: de6955a1d93aca740800000000000000
-      internalID: 5164682767834126061
+      spriteID: e2cba02b139bc1aa0800000000000000
+      internalID: -6188868164822320082
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota run (2)_2
+      name: 2prota jump_2
       rect:
         serializedVersion: 2
         x: 128
@@ -168,14 +183,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08b0b3c2034f19750800000000000000
-      internalID: 6310093040660450176
+      spriteID: 85a81ecb097248f70800000000000000
+      internalID: 9188512642340325976
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota run (2)_3
+      name: 2prota jump_3
       rect:
         serializedVersion: 2
         x: 192
@@ -190,8 +205,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eb694f01250c81cb0800000000000000
-      internalID: -4892949536433727810
+      spriteID: f2ab6e62f2ad7c560800000000000000
+      internalID: 7334070414247115311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2prota jump_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c84bf35e3f8b9bb10800000000000000
+      internalID: 1997831267378246796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2prota jump_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11276bc0eb0b0d2f0800000000000000
+      internalID: -950065191071616495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2prota jump_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a6a832890b523f30800000000000000
+      internalID: 4553802269622576802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2prota jump_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25b9b5b323e50f030800000000000000
+      internalID: 3526422078068333394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2prota jump_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11af7a06dcd36fe60800000000000000
+      internalID: 7995646140742105617
       vertices: []
       indices: 
       edges: []
@@ -200,7 +325,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6112199419e20634b947a2db35f6b203
+    spriteID: 0f3401b44fdfc8342acb2db40b540d6f
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +335,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      prota run (2)_0: -8071288035140614883
-      prota run (2)_1: 5164682767834126061
-      prota run (2)_2: 6310093040660450176
-      prota run (2)_3: -4892949536433727810
+      2prota jump_0: -602385488628184478
+      2prota jump_1: -6188868164822320082
+      2prota jump_2: 9188512642340325976
+      2prota jump_3: 7334070414247115311
+      2prota jump_4: 1997831267378246796
+      2prota jump_5: -950065191071616495
+      2prota jump_6: 4553802269622576802
+      2prota jump_7: 3526422078068333394
+      2prota jump_8: 7995646140742105617
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

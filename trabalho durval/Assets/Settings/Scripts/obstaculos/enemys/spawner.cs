@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
@@ -36,6 +35,7 @@ public class EnemySpawner : MonoBehaviour
         if (player == null)
         {
             Debug.LogError("Player não encontrado! Coloque a tag 'Player'.");
+            enabled = false;
             return;
         }
 
@@ -45,8 +45,6 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEnemy()
     {
         if (player == null) return;
-
-        // 🚫 BLOQUEIA SPAWN NA ZONA SEGURA
         if (inZonaSegura) return;
 
         spawnedEnemies.RemoveAll(e => e == null);
@@ -55,8 +53,55 @@ public class EnemySpawner : MonoBehaviour
         GameObject prefab = ChoosePrefab();
         if (prefab == null) return;
 
-        Vector2 spawnPos = GetGroundPosition(prefab);
-        GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
+        float distance = Random.Range(minDistance, maxDistance);
+
+        EnemyBase enemyBase = prefab.GetComponent<EnemyBase>();
+
+        // Observadora nasce à frente, outros atrás
+        float xPos = (enemyBase != null && enemyBase.enemyType == EnemyBase.EnemyType.Observadora)
+            ? player.position.x + distance
+            : player.position.x - distance;
+
+        float rayStartY = player.position.y + 20f;
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            new Vector2(xPos, rayStartY),
+            Vector2.down,
+            50f,
+            groundLayer
+        );
+
+        // Debug visual do raycast
+        Debug.DrawRay(
+            new Vector2(xPos, rayStartY),
+            Vector2.down * 50f,
+            Color.red,
+            1f
+        );
+
+        if (hit.collider == null) return;
+
+        // 🧠 Instancia primeiro no ponto do chão
+        GameObject enemy = Instantiate(prefab, hit.point, Quaternion.identity);
+
+        // 🔧 Ajusta altura usando o collider REAL
+        Collider2D col = enemy.GetComponent<Collider2D>();
+        if (col != null)
+        {
+            float yOffset = col.bounds.extents.y;
+            enemy.transform.position = new Vector2(
+                xPos,
+                hit.point.y + yOffset + spawnHeight
+            );
+        }
+        else
+        {
+            // fallback se não houver collider
+            enemy.transform.position = new Vector2(
+                xPos,
+                hit.point.y + spawnHeight
+            );
+        }
 
         spawnedEnemies.Add(enemy);
     }
@@ -80,37 +125,6 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return enemies[0].prefab;
-    }
-
-    Vector2 GetGroundPosition(GameObject prefab)
-    {
-        EnemyBase enemyBase = prefab.GetComponent<EnemyBase>();
-        float distance = Random.Range(minDistance, maxDistance);
-
-        // Observadora nasce à frente, outras atrás
-        float xPos = (enemyBase != null && enemyBase.enemyType == EnemyBase.EnemyType.Observadora)
-            ? player.position.x + distance
-            : player.position.x - distance;
-
-        float rayStartY = player.position.y + 20f;
-
-        RaycastHit2D hit = Physics2D.Raycast(
-            new Vector2(xPos, rayStartY),
-            Vector2.down,
-            50f,
-            groundLayer
-        );
-
-        float yOffset = 0.5f;
-        Collider2D col = prefab.GetComponent<Collider2D>();
-        if (col != null)
-            yOffset = col.bounds.extents.y;
-
-        if (hit.collider != null)
-            return new Vector2(xPos, hit.point.y + yOffset + spawnHeight);
-
-        // fallback
-        return new Vector2(xPos, player.position.y + yOffset + spawnHeight);
     }
 
     void Update()

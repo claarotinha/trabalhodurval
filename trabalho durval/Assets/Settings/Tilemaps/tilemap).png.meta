@@ -1,19 +1,31 @@
 fileFormatVersion: 2
-guid: 087c8dd4bdd974a4b9f4da6b42a4b4d5
+guid: f924d385c0797fa4c98d2b8b966ac5a0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8071288035140614883
-    second: prota run (2)_0
+      213: -3823176184597847677
+    second: tilemap)_0
   - first:
-      213: 5164682767834126061
-    second: prota run (2)_1
+      213: -8050145318884460397
+    second: tilemap)_1
   - first:
-      213: 6310093040660450176
-    second: prota run (2)_2
+      213: 293782290820623985
+    second: tilemap)_2
   - first:
-      213: -4892949536433727810
-    second: prota run (2)_3
+      213: -7568346618009671484
+    second: tilemap)_3
+  - first:
+      213: -394114232960736943
+    second: tilemap)_4
+  - first:
+      213: -6213470256383316672
+    second: tilemap)_5
+  - first:
+      213: 2090849258618508515
+    second: tilemap)_6
+  - first:
+      213: 5503492985721697710
+    second: tilemap)_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 60
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,13 +121,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: prota run (2)_0
+      name: tilemap)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 19
+        y: 19
+        width: 66
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +136,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d154599ab460dff80800000000000000
-      internalID: -8071288035140614883
+      spriteID: 381ef43248951fac0800000000000000
+      internalID: -3823176184597847677
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota run (2)_1
+      name: tilemap)_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
+        x: 113
+        y: 19
+        width: 66
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: de6955a1d93aca740800000000000000
-      internalID: 5164682767834126061
+      spriteID: 3983e95eb73284090800000000000000
+      internalID: -8050145318884460397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota run (2)_2
+      name: tilemap)_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
+        x: 207
+        y: 19
+        width: 66
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,20 +180,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08b0b3c2034f19750800000000000000
-      internalID: 6310093040660450176
+      spriteID: 17ee9addf69b31400800000000000000
+      internalID: 293782290820623985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota run (2)_3
+      name: tilemap)_3
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
+        x: 301
+        y: 19
+        width: 66
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,8 +202,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eb694f01250c81cb0800000000000000
-      internalID: -4892949536433727810
+      spriteID: 4c8218889d4d7f690800000000000000
+      internalID: -7568346618009671484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tilemap)_4
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 19
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15123777133d78af0800000000000000
+      internalID: -394114232960736943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tilemap)_5
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 19
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04d21d1e8b155c9a0800000000000000
+      internalID: -6213470256383316672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tilemap)_6
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 19
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e458daa250340d10800000000000000
+      internalID: 2090849258618508515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tilemap)_7
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 19
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea5bbc536b5506c40800000000000000
+      internalID: 5503492985721697710
       vertices: []
       indices: 
       edges: []
@@ -200,7 +300,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6112199419e20634b947a2db35f6b203
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +310,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      prota run (2)_0: -8071288035140614883
-      prota run (2)_1: 5164682767834126061
-      prota run (2)_2: 6310093040660450176
-      prota run (2)_3: -4892949536433727810
+      tilemap)_0: -3823176184597847677
+      tilemap)_1: -8050145318884460397
+      tilemap)_2: 293782290820623985
+      tilemap)_3: -7568346618009671484
+      tilemap)_4: -394114232960736943
+      tilemap)_5: -6213470256383316672
+      tilemap)_6: 2090849258618508515
+      tilemap)_7: 5503492985721697710
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

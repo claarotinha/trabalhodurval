@@ -1,19 +1,25 @@
 fileFormatVersion: 2
-guid: 087c8dd4bdd974a4b9f4da6b42a4b4d5
+guid: f998985839adedd458d7362e2ac9a11b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8071288035140614883
-    second: prota run (2)_0
+      213: 94083881826105337
+    second: runner walk_0
   - first:
-      213: 5164682767834126061
-    second: prota run (2)_1
+      213: 3208486115061252755
+    second: runner walk_1
   - first:
-      213: 6310093040660450176
-    second: prota run (2)_2
+      213: -4072638779541021289
+    second: runner walk_2
   - first:
-      213: -4892949536433727810
-    second: prota run (2)_3
+      213: 3086960031277665741
+    second: runner walk_3
+  - first:
+      213: -3935904791404274187
+    second: runner walk_4
+  - first:
+      213: -5602450763069355993
+    second: runner walk_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 12
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,7 +115,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: prota run (2)_0
+      name: runner walk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +130,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d154599ab460dff80800000000000000
-      internalID: -8071288035140614883
+      spriteID: 9f7b553cac04e4100800000000000000
+      internalID: 94083881826105337
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota run (2)_1
+      name: runner walk_1
       rect:
         serializedVersion: 2
         x: 64
@@ -146,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: de6955a1d93aca740800000000000000
-      internalID: 5164682767834126061
+      spriteID: 392cff25f15d68c20800000000000000
+      internalID: 3208486115061252755
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota run (2)_2
+      name: runner walk_2
       rect:
         serializedVersion: 2
         x: 128
@@ -168,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08b0b3c2034f19750800000000000000
-      internalID: 6310093040660450176
+      spriteID: 79d1af69b941b77c0800000000000000
+      internalID: -4072638779541021289
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota run (2)_3
+      name: runner walk_3
       rect:
         serializedVersion: 2
         x: 192
@@ -190,8 +196,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eb694f01250c81cb0800000000000000
-      internalID: -4892949536433727810
+      spriteID: dcd42240bc517da20800000000000000
+      internalID: 3086960031277665741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: runner walk_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fd179e027bd069c0800000000000000
+      internalID: -3935904791404274187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: runner walk_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72882abc6b81042b0800000000000000
+      internalID: -5602450763069355993
       vertices: []
       indices: 
       edges: []
@@ -200,7 +250,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6112199419e20634b947a2db35f6b203
+    spriteID: e9064c09b6f93674b967bf077510a435
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +260,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      prota run (2)_0: -8071288035140614883
-      prota run (2)_1: 5164682767834126061
-      prota run (2)_2: 6310093040660450176
-      prota run (2)_3: -4892949536433727810
+      runner walk_0: 94083881826105337
+      runner walk_1: 3208486115061252755
+      runner walk_2: -4072638779541021289
+      runner walk_3: 3086960031277665741
+      runner walk_4: -3935904791404274187
+      runner walk_5: -5602450763069355993
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 07aded4aa7bde3b4cbcdcc795db679c2
+guid: 8bf9048b73638754abd6d8b4f99711e6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4933335907380842624
-    second: prota jump (2)_0
+      213: 7968396472849574032
+    second: prota mais rapido (3)_0
   - first:
-      213: -8905741349065336518
-    second: prota jump (2)_1
+      213: -8526703659567617922
+    second: prota mais rapido (3)_1
   - first:
-      213: 8072119096430978608
-    second: prota jump (2)_2
+      213: 3278600832413078656
+    second: prota mais rapido (3)_2
   - first:
-      213: 3026307446125710270
-    second: prota jump (2)_3
+      213: 7776151150246264900
+    second: prota mais rapido (3)_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -60,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: prota jump (2)_0
+      name: prota mais rapido (3)_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 18
-        width: 22
-        height: 27
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0805d1daedab67440800000000000000
-      internalID: 4933335907380842624
+      spriteID: 098aca9af5e659e60800000000000000
+      internalID: 7968396472849574032
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota jump (2)_1
+      name: prota mais rapido (3)_1
       rect:
         serializedVersion: 2
-        x: 83
-        y: 18
-        width: 22
-        height: 28
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,20 +146,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a39d37b7d63786480800000000000000
-      internalID: -8905741349065336518
+      spriteID: e78e272b2301ba980800000000000000
+      internalID: -8526703659567617922
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota jump (2)_2
+      name: prota mais rapido (3)_2
       rect:
         serializedVersion: 2
-        x: 147
-        y: 18
-        width: 22
-        height: 28
+        x: 128
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,20 +168,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0366a6fdc8de50070800000000000000
-      internalID: 8072119096430978608
+      spriteID: 0841848161eef7d20800000000000000
+      internalID: 3278600832413078656
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: prota jump (2)_3
+      name: prota mais rapido (3)_3
       rect:
         serializedVersion: 2
-        x: 210
-        y: 18
-        width: 23
-        height: 27
+        x: 192
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,8 +190,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ebb4173969a9ff920800000000000000
-      internalID: 3026307446125710270
+      spriteID: 4408c2675407aeb60800000000000000
+      internalID: 7776151150246264900
       vertices: []
       indices: 
       edges: []
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5236c237519a53b4c9f5f08c49bb608e
     internalID: 0
     vertices: []
     indices: 
@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      prota mais rapido (3)_0: 7968396472849574032
+      prota mais rapido (3)_1: -8526703659567617922
+      prota mais rapido (3)_2: 3278600832413078656
+      prota mais rapido (3)_3: 7776151150246264900
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

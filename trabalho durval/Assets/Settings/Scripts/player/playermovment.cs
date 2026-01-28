@@ -6,7 +6,6 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     [Header("Velocidades")]
     public float walkSpeed = 5f;
     public float runSpeed = 8f;
-    public float crouchSpeed = 2.5f;
 
     [Header("Pulo")]
     public float jumpForce = 7f;
@@ -18,22 +17,23 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
     [Header("Trava de limite (câmera)")]
     public float cameraLeftLimit = -999f;
-    public float leftMargin = 2f;
+    public float leftMargin = 0.2f;
 
     private Rigidbody2D rb;
     private BoxCollider2D col;
+    private Animator anim;
+    private SpriteRenderer sr;
 
     private float horizontalInput;
     private float currentSpeed;
     private bool jumpRequested;
 
     private int groundedContacts = 0;
-    private bool isGroundedFallback = false;
+    private bool isGroundedFallback;
 
-    // 🔑 CONTROLE DE RESPAWN
     private bool ignoreCameraLimit = false;
 
-    // 🔑 MODIFICADOR DE VELOCIDADE (lentidão segura)
+    // 🔑 Slow
     private float speedMultiplier = 1f;
     private Coroutine slowRoutine;
 
@@ -41,6 +41,8 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
+        anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
 
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
@@ -48,21 +50,39 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
     void Update()
     {
+        // ===============================
+        // INPUT
+        // ===============================
         horizontalInput = 0f;
 
         if (Input.GetKey(KeyCode.A)) horizontalInput = -1f;
         if (Input.GetKey(KeyCode.D)) horizontalInput = 1f;
 
-        currentSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
+        bool isRunning = horizontalInput != 0f;
+        bool isRunningFast = isRunning && Input.GetKey(KeyCode.LeftShift);
+
+        currentSpeed = isRunningFast ? runSpeed : walkSpeed;
 
         if (Input.GetKeyDown(KeyCode.Space))
             jumpRequested = true;
+
+        // ===============================
+        // FLIP
+        // ===============================
+        if (horizontalInput != 0)
+            sr.flipX = horizontalInput < 0;
+
+        // ===============================
+        // ANIMAÇÕES
+        // ===============================
+        anim.SetBool("IsRunning", isRunning);
+        anim.SetBool("IsRunningFast", isRunningFast);
     }
 
     void FixedUpdate()
     {
         // ===============================
-        // GROUND CHECK (SEM OBJETO VAZIO)
+        // GROUND CHECK
         // ===============================
         Vector2 footPos = new Vector2(
             transform.position.x,
@@ -84,8 +104,11 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
             }
         }
 
+        bool isGrounded = groundedContacts > 0 || isGroundedFallback;
+        anim.SetBool("IsGrounded", isGrounded);
+
         // ===============================
-        // MOVIMENTO (COM LENTIDÃO SEGURA)
+        // MOVIMENTO
         // ===============================
         rb.linearVelocity = new Vector2(
             horizontalInput * currentSpeed * speedMultiplier,
@@ -93,20 +116,15 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         );
 
         // ===============================
-        // TRAVA DA CÂMERA (FORMA SEGURA)
+        // LIMITE DA CÂMERA (ESQUERDA)
         // ===============================
         if (!ignoreCameraLimit)
         {
-            float minAllowedX = cameraLeftLimit - leftMargin;
+            float minX = cameraLeftLimit + leftMargin;
 
-            if (rb.position.x < minAllowedX)
+            if (rb.position.x < minX)
             {
-                rb.position = new Vector2(
-                    minAllowedX,
-                    rb.position.y
-                );
-
-                // remove empurrão residual
+                rb.position = new Vector2(minX, rb.position.y);
                 rb.linearVelocity = new Vector2(
                     Mathf.Max(0f, rb.linearVelocity.x),
                     rb.linearVelocity.y
@@ -117,7 +135,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         // ===============================
         // PULO
         // ===============================
-        if (jumpRequested && (groundedContacts > 0 || isGroundedFallback))
+        if (jumpRequested && isGrounded)
         {
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x,
@@ -130,7 +148,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     }
 
     // ======================================
-    // 🔑 LENTIDÃO (USADA POR ENTIDADES)
+    // 🔑 SLOW (USADO POR ENTIDADES)
     // ======================================
     public void ApplySlow(float multiplier, float duration)
     {
@@ -148,7 +166,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     }
 
     // ======================================
-    // 🔑 IGNORAR LIMITE DA CÂMERA (RESPAWN)
+    // 🔑 IGNORAR LIMITE (RESPAWN)
     // ======================================
     public void IgnoreCameraLimit(float time)
     {
