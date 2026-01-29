@@ -1,111 +1,131 @@
 using UnityEngine;
 using System.Collections;
 
-public class BossAttackPattern : MonoBehaviour
+public class BossController : MonoBehaviour
 {
-    [Header("Ataques")]
-    public GameObject projectilePrefab;      // Projétil único
-    public Transform shootPoint;             // De onde sai o projétil
-
-    public GameObject areaAttackPrefab;      // Ataque em área
-    public Transform[] areaPoints;           // Pontos onde o ataque em área aparece
-
     [Header("Rodadas")]
-    public float attackIntervalEasy = 3f;
-    public float attackIntervalMedium = 2f;
-    public float attackIntervalHard = 1f;
+    public int maxRounds = 3;
+    private int currentRound = 1;
 
-    private int currentRound = 0;            // 0 = fácil, 1 = médio, 2 = difícil
-    private bool isPaused = false;           // Pausa para interação
-    private bool canInteract = false;
+    [Header("Tempo")]
+    public float roundDuration = 10f;
+    public float restDuration = 3f;
+
+    [Header("Projéteis")]
+    public GameObject projectilePrefab;
+    public Transform shootPoint;
+    public float projectileSpeed = 5f;
+    public float shootInterval = 1.5f;
+
+    [Header("Pisada")]
+    public GameObject stompAreaPrefab;
+    public Transform stompPoint;
+    public float stompInterval = 4f;
+    public int stompDamage = 1;
+
+    private bool isFighting;
+    private BossMovement movement;
 
     void Start()
     {
-        StartCoroutine(RoundRoutine());
+        movement = GetComponent<BossMovement>();
+        StartCoroutine(RoundLoop());
     }
 
-    // Rotina das rodadas
-    IEnumerator RoundRoutine()
+    IEnumerator RoundLoop()
     {
-        while (currentRound < 3)
+        while (currentRound <= maxRounds)
         {
-            float interval = GetAttackInterval();
-            float roundDuration = 10f; // duração de cada rodada (ajuste como quiser)
+            Debug.Log("Rodada " + currentRound);
 
-            float timer = 0f;
-            while (timer < roundDuration)
-            {
-                if (!isPaused) DoAttack();
-                timer += interval;
-                yield return new WaitForSeconds(interval);
-            }
+            SetupMovementForRound();
+            isFighting = true;
 
-            // Pausa para interação
-            isPaused = true;
-            canInteract = true;
-            Debug.Log("Boss enfraquecido! Pressione E para interagir.");
-            float pauseTime = 5f; // tempo da pausa
-            yield return new WaitForSeconds(pauseTime);
-            canInteract = false;
-            isPaused = false;
+            StartCoroutine(ShootRoutine());
+            StartCoroutine(StompRoutine());
 
+            yield return new WaitForSeconds(roundDuration);
+
+            isFighting = false;
+            yield return new WaitForSeconds(restDuration);
+
+            IncreaseDifficulty();
             currentRound++;
         }
 
-        Debug.Log("Boss derrotado!");
+        DefeatBoss();
     }
 
-    // Determina intervalo de ataque de acordo com a rodada
-    float GetAttackInterval()
+    IEnumerator ShootRoutine()
     {
-        switch (currentRound)
+        while (isFighting)
         {
-            case 0: return attackIntervalEasy;
-            case 1: return attackIntervalMedium;
-            case 2: return attackIntervalHard;
-            default: return 2f;
+            Shoot();
+            yield return new WaitForSeconds(shootInterval);
         }
     }
 
-    // Escolhe ataque aleatório
-    void DoAttack()
+    IEnumerator StompRoutine()
     {
-        int choice = Random.Range(0, 2); // 0 = projétil único, 1 = ataque área
-        if (choice == 0) ShootSingle();
-        else ShootArea();
+        while (isFighting)
+        {
+            Stomp();
+            yield return new WaitForSeconds(stompInterval);
+        }
     }
 
-    // Ataque projétil único
-    void ShootSingle()
+    void Shoot()
     {
-        if (!projectilePrefab || !shootPoint) return;
-
         GameObject proj = Instantiate(projectilePrefab, shootPoint.position, Quaternion.identity);
         Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
+
         if (rb != null)
+            rb.linearVelocity = Vector2.left * projectileSpeed;
+    }
+
+    void Stomp()
+    {
+        GameObject area = Instantiate(stompAreaPrefab, stompPoint.position, Quaternion.identity);
+        BossStompArea stomp = area.GetComponent<BossStompArea>();
+
+        if (stomp != null)
+            stomp.damage = stompDamage;
+    }
+
+    void SetupMovementForRound()
+    {
+        if (movement == null) return;
+
+        switch (currentRound)
         {
-            rb.linearVelocity = Vector2.left * 5f; // velocidade padrão, ajuste se quiser
+            case 1:
+                movement.SetPattern(BossMovement.MovementPattern.Hover);
+                break;
+
+            case 2:
+                movement.SetPattern(BossMovement.MovementPattern.SideToSide);
+                break;
+
+            case 3:
+                movement.SetPattern(BossMovement.MovementPattern.Jumping);
+                break;
         }
     }
 
-    // Ataque em área
-    void ShootArea()
+    void IncreaseDifficulty()
     {
-        if (!areaAttackPrefab || areaPoints.Length == 0) return;
+        projectileSpeed += 2f;
+        shootInterval = Mathf.Max(0.5f, shootInterval - 0.3f);
+        stompInterval = Mathf.Max(2f, stompInterval - 0.5f);
+        stompDamage++;
 
-        foreach (Transform point in areaPoints)
-        {
-            Instantiate(areaAttackPrefab, point.position, Quaternion.identity);
-        }
+        if (movement != null)
+            movement.IncreaseDifficulty(0.8f);
     }
 
-    // Chamado pelo player quando interage com E
-    public void Interact()
+    void DefeatBoss()
     {
-        if (canInteract)
-        {
-            Debug.Log("Player interagiu com o boss!");
-            // Aqui você pode colocar efeitos como diálogo ou reduzir vida do boss
-        }
+        Debug.Log("Boss derrotado");
+        Destroy(gameObject);
     }
 }
