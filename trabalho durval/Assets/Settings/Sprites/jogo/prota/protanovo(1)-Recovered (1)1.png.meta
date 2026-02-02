@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 8bf9048b73638754abd6d8b4f99711e6
+guid: 92bbe7da2e3d99c4c82fdec8a428c425
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7968396472849574032
-    second: prota mais rapido (3)_0
-  - first:
-      213: -8526703659567617922
-    second: prota mais rapido (3)_1
-  - first:
-      213: 3278600832413078656
-    second: prota mais rapido (3)_2
-  - first:
-      213: 7776151150246264900
-    second: prota mais rapido (3)_3
+      213: 5144693413194753760
+    second: protanovo(1)-Recovered (1)1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -60,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 120
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: prota mais rapido (3)_0
+      name: protanovo(1)-Recovered (1)1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 219
+        y: 149
+        width: 162
+        height: 282
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,74 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 098aca9af5e659e60800000000000000
-      internalID: 7968396472849574032
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: prota mais rapido (3)_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e78e272b2301ba980800000000000000
-      internalID: -8526703659567617922
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: prota mais rapido (3)_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0841848161eef7d20800000000000000
-      internalID: 3278600832413078656
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: prota mais rapido (3)_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4408c2675407aeb60800000000000000
-      internalID: 7776151150246264900
+      spriteID: 0e6e3cbc66f956740800000000000000
+      internalID: 5144693413194753760
       vertices: []
       indices: 
       edges: []
@@ -200,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5236c237519a53b4c9f5f08c49bb608e
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      prota mais rapido (3)_0: 7968396472849574032
-      prota mais rapido (3)_1: -8526703659567617922
-      prota mais rapido (3)_2: 3278600832413078656
-      prota mais rapido (3)_3: 7776151150246264900
+      protanovo(1)-Recovered (1)1_0: 5144693413194753760
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

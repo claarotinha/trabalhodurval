@@ -1,22 +1,34 @@
 fileFormatVersion: 2
-guid: 0bc9e64c7f606b04b8257692cc923484
+guid: fd2e36390c6dcaa4da5db75206f2ceec
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9028666447118600523
-    second: idleprotagonista_0
+      213: 1513930584052996249
+    second: jumpprotagonista (2)_0
   - first:
-      213: -7596886849495263844
-    second: idleprotagonista_1
+      213: 5339155843904561713
+    second: jumpprotagonista (2)_1
   - first:
-      213: 1869047812854043651
-    second: idleprotagonista_2
+      213: 7250891750705963795
+    second: jumpprotagonista (2)_2
   - first:
-      213: -4022997398146524797
-    second: idleprotagonista_3
+      213: 7901533569318102844
+    second: jumpprotagonista (2)_3
   - first:
-      213: 7281348431830208895
-    second: idleprotagonista_4
+      213: -9010895285064250553
+    second: jumpprotagonista (2)_4
+  - first:
+      213: -7951044426435479107
+    second: jumpprotagonista (2)_5
+  - first:
+      213: 5917075562419902826
+    second: jumpprotagonista (2)_6
+  - first:
+      213: 5642639704115143410
+    second: jumpprotagonista (2)_7
+  - first:
+      213: -5417940639172158773
+    second: jumpprotagonista (2)_8
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -63,7 +75,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 12
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -112,13 +124,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: idleprotagonista_0
+      name: jumpprotagonista (2)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 41
+        y: 34
+        width: 18
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,20 +139,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b490ef73c444c4d70800000000000000
-      internalID: 9028666447118600523
+      spriteID: 998141558df820510800000000000000
+      internalID: 1513930584052996249
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idleprotagonista_1
+      name: jumpprotagonista (2)_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
+        x: 134
+        y: 34
+        width: 19
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,20 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c959ff019af629690800000000000000
-      internalID: -7596886849495263844
+      spriteID: 132e164b3fd781a40800000000000000
+      internalID: 5339155843904561713
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idleprotagonista_2
+      name: jumpprotagonista (2)_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
+        x: 229
+        y: 34
+        width: 18
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,20 +183,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 304d269451130f910800000000000000
-      internalID: 1869047812854043651
+      spriteID: 313a3a161a750a460800000000000000
+      internalID: 7250891750705963795
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idleprotagonista_3
+      name: jumpprotagonista (2)_3
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
+        x: 323
+        y: 34
+        width: 18
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +205,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 389d72f5e217b28c0800000000000000
-      internalID: -4022997398146524797
+      spriteID: c37a70ccae2e7ad60800000000000000
+      internalID: 7901533569318102844
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idleprotagonista_4
+      name: jumpprotagonista (2)_4
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
+        x: 416
+        y: 34
+        width: 20
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +227,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f71561d02db8c0560800000000000000
-      internalID: 7281348431830208895
+      spriteID: 74bc081ea7ed2f280800000000000000
+      internalID: -9010895285064250553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumpprotagonista (2)_5
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 34
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db9b6f8783738a190800000000000000
+      internalID: -7951044426435479107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumpprotagonista (2)_6
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 34
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a69de2fbfdcad1250800000000000000
+      internalID: 5917075562419902826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumpprotagonista (2)_7
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 34
+        width: 25
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f26c473aeeae4e40800000000000000
+      internalID: 5642639704115143410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumpprotagonista (2)_8
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 34
+        width: 25
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bca9df3b1bb9fc4b0800000000000000
+      internalID: -5417940639172158773
       vertices: []
       indices: 
       edges: []
@@ -225,7 +325,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c0ffd219d8e286d40ad45478d8d50cb4
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -235,11 +335,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      idleprotagonista_0: 9028666447118600523
-      idleprotagonista_1: -7596886849495263844
-      idleprotagonista_2: 1869047812854043651
-      idleprotagonista_3: -4022997398146524797
-      idleprotagonista_4: 7281348431830208895
+      jumpprotagonista (2)_0: 1513930584052996249
+      jumpprotagonista (2)_1: 5339155843904561713
+      jumpprotagonista (2)_2: 7250891750705963795
+      jumpprotagonista (2)_3: 7901533569318102844
+      jumpprotagonista (2)_4: -9010895285064250553
+      jumpprotagonista (2)_5: -7951044426435479107
+      jumpprotagonista (2)_6: 5917075562419902826
+      jumpprotagonista (2)_7: 5642639704115143410
+      jumpprotagonista (2)_8: -5417940639172158773
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

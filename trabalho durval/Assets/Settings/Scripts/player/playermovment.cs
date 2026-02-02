@@ -10,12 +10,18 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     [Header("Pulo")]
     public float jumpForce = 7f;
 
+    [Header("Ataque (Bola de Fogo)")]
+    public GameObject fireballPrefab;
+    public Transform firePoint;
+    public float fireballForce = 8f;
+    public float attackCooldown = 0.4f;
+
     [Header("Ground Check")]
     public string groundTag = "Ground";
     public float groundCheckRadius = 0.12f;
     public float groundCheckYOffset = 0.05f;
 
-    [Header("Trava de limite (câmera)")]
+    [Header("Trava da câmera (esquerda)")]
     public float cameraLeftLimit = -999f;
     public float leftMargin = 0.2f;
 
@@ -27,13 +33,12 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     private float horizontalInput;
     private float currentSpeed;
     private bool jumpRequested;
-
-    private int groundedContacts = 0;
-    private bool isGroundedFallback;
+    private bool isGrounded;
+    private bool canAttack = true;
 
     private bool ignoreCameraLimit = false;
 
-    // 🔑 Slow
+    // Slow
     private float speedMultiplier = 1f;
     private Coroutine slowRoutine;
 
@@ -51,7 +56,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     void Update()
     {
         // ===============================
-        // INPUT
+        // INPUT MOVIMENTO
         // ===============================
         horizontalInput = 0f;
 
@@ -63,8 +68,17 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
         currentSpeed = isRunningFast ? runSpeed : walkSpeed;
 
+        // ===============================
+        // INPUT PULO
+        // ===============================
         if (Input.GetKeyDown(KeyCode.Space))
             jumpRequested = true;
+
+        // ===============================
+        // INPUT ATAQUE
+        // ===============================
+        if (Input.GetMouseButtonDown(0) && canAttack)
+            StartCoroutine(Attack());
 
         // ===============================
         // FLIP
@@ -77,6 +91,9 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         // ===============================
         anim.SetBool("IsRunning", isRunning);
         anim.SetBool("IsRunningFast", isRunningFast);
+        anim.SetBool("IsGrounded", isGrounded);
+        anim.SetBool("IsJumping", !isGrounded);
+        anim.SetFloat("VerticalSpeed", rb.linearVelocity.y);
     }
 
     void FixedUpdate()
@@ -94,18 +111,15 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
             groundCheckRadius
         );
 
-        isGroundedFallback = false;
+        isGrounded = false;
         foreach (var c in hits)
         {
             if (c != null && !c.isTrigger && c.CompareTag(groundTag))
             {
-                isGroundedFallback = true;
+                isGrounded = true;
                 break;
             }
         }
-
-        bool isGrounded = groundedContacts > 0 || isGroundedFallback;
-        anim.SetBool("IsGrounded", isGrounded);
 
         // ===============================
         // MOVIMENTO
@@ -116,7 +130,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         );
 
         // ===============================
-        // LIMITE DA CÂMERA (ESQUERDA)
+        // LIMITE DA CÂMERA
         // ===============================
         if (!ignoreCameraLimit)
         {
@@ -137,18 +151,53 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         // ===============================
         if (jumpRequested && isGrounded)
         {
-            rb.linearVelocity = new Vector2(
-                rb.linearVelocity.x,
-                jumpForce
-            );
-
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpRequested = false;
-            groundedContacts = 0;
         }
     }
 
     // ======================================
-    // 🔑 SLOW (USADO POR ENTIDADES)
+    // 🔥 ATAQUE (BOLA DE FOGO)
+    // ======================================
+    IEnumerator Attack()
+    {
+        canAttack = false;
+
+        anim.SetTrigger("Attack");
+
+        yield return new WaitForSeconds(0.1f);
+
+        GameObject fireball = Instantiate(
+            fireballPrefab,
+            firePoint.position,
+            Quaternion.identity
+        );
+
+        Rigidbody2D fireRb = fireball.GetComponent<Rigidbody2D>();
+        float dir = sr.flipX ? -1f : 1f;
+        fireRb.linearVelocity = new Vector2(dir * fireballForce, 0f);
+
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
+    }
+
+    // ======================================
+    // 🔑 IGNORAR LIMITE DA CÂMERA (RESPAWN)
+    // ======================================
+    public void IgnoreCameraLimit(float time)
+    {
+        StartCoroutine(IgnoreCameraRoutine(time));
+    }
+
+    IEnumerator IgnoreCameraRoutine(float time)
+    {
+        ignoreCameraLimit = true;
+        yield return new WaitForSeconds(time);
+        ignoreCameraLimit = false;
+    }
+
+    // ======================================
+    // 🔑 SLOW
     // ======================================
     public void ApplySlow(float multiplier, float duration)
     {
@@ -163,40 +212,5 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         speedMultiplier = Mathf.Clamp(multiplier, 0.25f, 1f);
         yield return new WaitForSeconds(duration);
         speedMultiplier = 1f;
-    }
-
-    // ======================================
-    // 🔑 IGNORAR LIMITE (RESPAWN)
-    // ======================================
-    public void IgnoreCameraLimit(float time)
-    {
-        StartCoroutine(IgnoreCameraRoutine(time));
-    }
-
-    IEnumerator IgnoreCameraRoutine(float time)
-    {
-        ignoreCameraLimit = true;
-        yield return new WaitForSeconds(time);
-        ignoreCameraLimit = false;
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!collision.gameObject.CompareTag(groundTag)) return;
-
-        foreach (var cp in collision.contacts)
-        {
-            if (cp.normal.y > 0.6f)
-            {
-                groundedContacts++;
-                break;
-            }
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (!collision.gameObject.CompareTag(groundTag)) return;
-        groundedContacts = Mathf.Max(0, groundedContacts - 1);
     }
 }

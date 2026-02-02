@@ -766,7 +766,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 46.13, y: 9.57, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 3, y: 2.9415, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 45519836}
@@ -3558,16 +3558,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3242062426342580820, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_Size.x
-      value: 4
+      value: 6.4
       objectReference: {fileID: 0}
     - target: {fileID: 3242062426342580820, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_Size.y
-      value: 4
+      value: 6.4
       objectReference: {fileID: 0}
     - target: {fileID: 3242062426342580820, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 9028666447118600523, guid: 0bc9e64c7f606b04b8257692cc923484, type: 3}
+      objectReference: {fileID: 5144693413194753760, guid: 92bbe7da2e3d99c4c82fdec8a428c425, type: 3}
     - target: {fileID: 3242062426342580820, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -3578,11 +3578,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4658017112584224823, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.55
+      value: -3.78
       objectReference: {fileID: 0}
     - target: {fileID: 4658017112584224823, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.39
+      value: -2.92
       objectReference: {fileID: 0}
     - target: {fileID: 4658017112584224823, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3618,27 +3618,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9036824347906283196, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_Size.x
-      value: 1.2985787
+      value: 1.4933398
       objectReference: {fileID: 0}
     - target: {fileID: 9036824347906283196, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_Size.y
-      value: 1.6233352
+      value: 2.394589
       objectReference: {fileID: 0}
     - target: {fileID: 9036824347906283196, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_Offset.x
-      value: -0.12828588
+      value: -0.030905366
       objectReference: {fileID: 0}
     - target: {fileID: 9036824347906283196, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_Offset.y
-      value: -0.028740704
+      value: -0.0014741421
       objectReference: {fileID: 0}
     - target: {fileID: 9036824347906283196, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 4
+      value: 6.4
       objectReference: {fileID: 0}
     - target: {fileID: 9036824347906283196, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 4
+      value: 6.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9036824347906283196, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 9036824347906283196, guid: 74dedab64d090e545be60a48c28cff20, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4209,13 +4217,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ab27dd6227dce45b9dd129f07023b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxRounds: 3
+  roundDuration: 10
+  restDuration: 3
   projectilePrefab: {fileID: 2348033797501239759, guid: 4cb0dd794608ed94ebf0ed056f8d457d, type: 3}
   shootPoint: {fileID: 95961699}
-  areaAttackPrefab: {fileID: 220293061}
-  areaPoints: []
-  attackIntervalEasy: 3
-  attackIntervalMedium: 2
-  attackIntervalHard: 1
+  projectileSpeed: 5
+  shootInterval: 1.5
+  stompAreaPrefab: {fileID: 220293061}
+  stompPoint: {fileID: 7860166926482141786, guid: 2066e32331d73f54eb2e0776e5dd21e4, type: 3}
+  stompInterval: 4
+  stompDamage: 1
 --- !u!212 &1656684007
 SpriteRenderer:
   m_ObjectHideFlags: 0
