@@ -1,32 +1,33 @@
 using UnityEngine;
 
-public class NPCBalão : MonoBehaviour
+public class PlacaInterativa : MonoBehaviour
 {
-    public GameObject balaoPrefab; // Arraste o prefab do balão aqui
-    
-    private GameObject balaoAtual;
-    
-    void OnTriggerEnter2D(Collider2D other)
+    public GameObject balaoUI;
+
+    private void Start()
     {
-        if (other.CompareTag("Player") && balaoPrefab != null)
+        if (balaoUI != null)
+            balaoUI.SetActive(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
         {
-            // Cria o balão se não existe
-            if (balaoAtual == null)
+            if (balaoUI != null)
             {
-                balaoAtual = Instantiate(balaoPrefab);
+                balaoUI.SetActive(true);
+           
             }
-            
-            // Coloca acima do NPC
-            balaoAtual.transform.position = transform.position + Vector3.up * 2f;
-            balaoAtual.SetActive(true);
         }
     }
-    
-    void OnTriggerExit2D(Collider2D other)
+
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && balaoAtual != null)
+        if (other.CompareTag("Player"))
         {
-            balaoAtual.SetActive(false);
+            if (balaoUI != null)
+                balaoUI.SetActive(false);
         }
     }
 }

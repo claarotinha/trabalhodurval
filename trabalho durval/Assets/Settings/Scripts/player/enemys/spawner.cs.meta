@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 760900317f0e7484f82bae6768d6f82e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - entidadeNormalPrefab: {fileID: 9018190763055919958, guid: 624bcca60afd9fb498c47e7aae733d25, type: 3}
+  - entidadeRapidaPrefab: {fileID: 3051192617843795739, guid: c9cbece7713f08e4ab87fee3171704ea, type: 3}
+  - observadoraPrefab: {fileID: 4314818896195801076, guid: 6c9eaadaf05465f4abb5dbc19349368d, type: 3}
+  - spawnAreaStart: {instanceID: 0}
+  - spawnAreaEnd: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
