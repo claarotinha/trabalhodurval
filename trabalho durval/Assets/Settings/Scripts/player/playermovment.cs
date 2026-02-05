@@ -36,6 +36,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     private bool jumpRequested;
     private bool isGrounded;
     private bool canAttack = true;
+    private bool isAttacking = false;
 
     // ================= SLOW =================
     private float speedMultiplier = 1f;
@@ -71,8 +72,8 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             jumpRequested = true;
 
-        // ================= ATAQUE =================
-        if (Input.GetMouseButtonDown(0) && canAttack)
+        // ================= ATAQUE (TECLA J) =================
+        if (Input.GetKeyDown(KeyCode.J) && canAttack)
             StartCoroutine(Attack());
 
         // ================= FLIP =================
@@ -92,6 +93,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         // ================= ANIMAÇÕES =================
         anim.SetBool("IsRunning", isMoving);
         anim.SetBool("IsGrounded", isGrounded);
+        anim.SetBool("IsAttacking", isAttacking);
         anim.SetFloat("VerticalSpeed", rb.linearVelocity.y);
     }
 
@@ -150,10 +152,9 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     IEnumerator Attack()
     {
         canAttack = false;
+        isAttacking = true;
 
-        anim.SetTrigger("Attack");
-
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.1f); // sincroniza com a animação
 
         GameObject fireball = Instantiate(
             fireballPrefab,
@@ -162,11 +163,12 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         );
 
         float dir = sr.flipX ? -1f : 1f;
-
         Fireball fb = fireball.GetComponent<Fireball>();
         fb.Shoot(dir);
 
         yield return new WaitForSeconds(attackCooldown);
+
+        isAttacking = false;
         canAttack = true;
     }
 
