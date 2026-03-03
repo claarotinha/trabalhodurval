@@ -26,7 +26,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
 
     // ================= COMPONENTES =================
     private Rigidbody2D rb;
-    private BoxCollider2D col;
+    private CapsuleCollider2D col;
     private Animator anim;
     private SpriteRenderer sr;
 
@@ -48,7 +48,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<BoxCollider2D>();
+        col = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
 
@@ -72,7 +72,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             jumpRequested = true;
 
-        // ================= ATAQUE (TECLA J) =================
+        // ================= ATAQUE =================
         if (Input.GetKeyDown(KeyCode.J) && canAttack)
             StartCoroutine(Attack());
 
@@ -80,7 +80,6 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         if (horizontalInput != 0)
             sr.flipX = horizontalInput < 0;
 
-        // FirePoint acompanha o flip
         if (firePoint != null)
         {
             firePoint.localPosition = new Vector3(
@@ -154,7 +153,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         canAttack = false;
         isAttacking = true;
 
-        yield return new WaitForSeconds(0.1f); // sincroniza com a animação
+        yield return new WaitForSeconds(0.1f);
 
         GameObject fireball = Instantiate(
             fireballPrefab,
@@ -163,8 +162,7 @@ public class PlayerMovement2D_TagBased : MonoBehaviour
         );
 
         float dir = sr.flipX ? -1f : 1f;
-        Fireball fb = fireball.GetComponent<Fireball>();
-        fb.Shoot(dir);
+        fireball.GetComponent<Fireball>().Shoot(dir);
 
         yield return new WaitForSeconds(attackCooldown);
 

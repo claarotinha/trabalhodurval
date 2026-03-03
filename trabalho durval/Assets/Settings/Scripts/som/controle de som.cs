@@ -1,29 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 
-public class ControladorSom : MonoBehaviour
+public class MusicController : MonoBehaviour
 {
-    private bool estadoSom = true;
+    public AudioSource audioSource;
+    public float fadeDuration = 1.5f;
 
-    [SerializeField] private AudioSource fundoMusical;
-    [SerializeField] private Sprite somLigadoSprite;
-    [SerializeField] private Sprite somDesligadoSprite;
-    [SerializeField] private Image muteImage;
-
-    public void LigarDesligarSom()
+    public void ChangeMusic(AudioClip newMusic)
     {
-        estadoSom = !estadoSom;
-        fundoMusical.enabled = estadoSom;
+        if (audioSource.clip == newMusic) return;
+        StartCoroutine(FadeMusic(newMusic));
+    }
 
-        if (estadoSom)
+    IEnumerator FadeMusic(AudioClip newMusic)
+    {
+        float startVolume = audioSource.volume;
+
+        while (audioSource.volume > 0)
         {
-            muteImage.sprite = somLigadoSprite;
+            audioSource.volume -= startVolume * Time.deltaTime / fadeDuration;
+            yield return null;
         }
-        else
+
+        audioSource.clip = newMusic;
+        audioSource.Play();
+
+        while (audioSource.volume < startVolume)
         {
-            muteImage.sprite = somDesligadoSprite;
+            audioSource.volume += startVolume * Time.deltaTime / fadeDuration;
+            yield return null;
         }
     }
 }
